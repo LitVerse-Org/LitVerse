@@ -14,7 +14,7 @@
     "@prisma/client": "5.3.1",
     "autoprefixer": "^10.4.8",
     "aws-amplify": "^5.3.11",
-    "aws-sdk": "^2.1204.0",
+    "aws-sdk": "^2.1463.0",
     "axios": "^0.27.2",
     "javascript-time-ago": "^2.5.7",
     "mongodb": "^4.9.0",
