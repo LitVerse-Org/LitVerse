@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-litverse-dev-132002-authRole",
+      "UnauthRoleArn": "arn:aws:iam::203811615434:role/amplify-litverse-dev-132002-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::203811615434:role/amplify-litverse-dev-132002-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-litverse-dev-132002-deployment",
+      "UnauthRoleName": "amplify-litverse-dev-132002-unauthRole",
+      "StackName": "amplify-litverse-dev-132002",
+      "StackId": "arn:aws:cloudformation:us-east-1:203811615434:stack/amplify-litverse-dev-132002/98886920-5fb5-11ee-a5e4-0a0379311661",
+      "AmplifyAppId": "dg8ta42f18ddr"
+    }
+  }
+}
