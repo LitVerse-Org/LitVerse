@@ -23,8 +23,6 @@ model User {
   following   Follower[] @relation("UserFollowing")
 }
 
-
-
 model Follower {
   id          Int      @id @default(autoincrement())
   userId      Int
@@ -33,8 +31,6 @@ model Follower {
   user        User     @relation("UserFollowers", fields: [userId], references: [id])
   follower    User     @relation("UserFollowing", fields: [followerId], references: [id])
 }
-
-
 
 model Like {
   id      Int  @id @default(autoincrement())
