@@ -18,7 +18,7 @@ button:focus {
 /*    background: grey;*/
 /*}*/
 
-.stripe-bg {
+.lr-stripe-bg {
     background: linear-gradient(
             45deg,
             #000 0%,
@@ -29,6 +29,21 @@ button:focus {
             #ffffff 100%
     );
 }
+
+.rl-stripe-bg {
+    background: linear-gradient(
+            135deg,
+            #000 0%,
+            #000 33.33%,
+            #987654 33.33%,
+            #987654 66.66%,
+            #ffffff 66.66%,
+            #ffffff 100%
+    );
+}
+
+
+
 
 .bg-darkGreen {
     background-color: #4d5d53;

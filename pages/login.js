@@ -19,12 +19,18 @@ export default function LoginPage({ providers }) {
   //     At least one special character (e.g., !, @, #, $, etc.).
 
   return (
-      <div className="flex items-center justify-center h-screen stripe-bg">
+      <div className="flex items-center justify-center h-screen rl-stripe-bg">
         <img
-            src="/logo_transparent_background.png"
+            src="/white_logo_transparent_background.png"
             alt="Logo"
             className="absolute top-12 w-1/3"
-            style={{ right: '3rem' }}
+            style={{left: '3rem' }}
+        />
+        <img
+            src="/spacedoodle.png"
+            alt="Logo"
+            className="absolute bottom-0 w-1/4"
+            style={{ right: '0rem' }}
         />
         <div className="p-8 rounded-lg shadow-md w-96">
           <div className="mb-2">
