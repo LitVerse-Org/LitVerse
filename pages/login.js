@@ -1,34 +1,117 @@
+import { useState } from 'react';
 import { getProviders, signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
 export default function LoginPage({ providers }) {
+  const [showModal, setShowModal] = useState(false);
   const { data, status } = useSession();
   const router = useRouter();
 
-  // Redirect to home if the session is active
   if (status === "authenticated") {
     router.push("/");
   }
 
+  //PASSWORD RULES:
+  // Minimum length of 8 characters.
+  //     At least one uppercase letter.
+  //     At least one lowercase letter.
+  //     At least one number.
+  //     At least one special character (e.g., !, @, #, $, etc.).
+
   return (
-      <div className="flex items-center justify-center h-screen">
-        {Object.values(providers).map((provider) => (
-            <div key={provider.id}>
-              <button
-                  onClick={async () => {
-                    await signIn(provider.id);
-                  }}
-                  className="bg-twitterWhite pl-3 pr-5 py-2 text-black rounded-full flex items-center"
-              >
-                <img
-                    src={provider.id === "google" ? "/google.png" : "/apple.png"}
-                    alt=""
-                    className="h-8"
-                />
-                Sign in with {provider.name}
-              </button>
+      <div className="flex items-center justify-center h-screen stripe-bg">
+        <img
+            src="/logo_transparent_background.png"
+            alt="Logo"
+            className="absolute top-12 w-1/3"
+            style={{ right: '3rem' }}
+        />
+        <div className="p-8 rounded-lg shadow-md w-96">
+          <div className="mb-2">
+            <input
+                type="text"
+                placeholder="Username"
+                className="w-full p-3 rounded-full border border-blue-300"
+            />
+          </div>
+          <div className="mb-2">
+            <input
+                type="password"
+                placeholder="Password"
+                className="w-full p-3 rounded-full border border-blue-300"
+            />
+          </div>
+          <div className="mb-2">
+            <button className="text-white p-2 rounded-full w-full" style={{ backgroundColor: '#373a3a' }}>
+              Sign In
+            </button>
+          </div>
+          <div className="mb-2 text-center">
+            <button className="text-black p-1 rounded-full w-56 bg-white" onClick={() => setShowModal(true)}>
+              Forgot Username/Password?
+            </button>
+          </div>
+          <div className="mb-2 text-center">
+            <button className="position-center text-black p-1 rounded-full w-56 bg-white" onClick={() => router.push('/register')}>
+              No Account? Register Here
+            </button>
+          </div>
+          <div className="border-b border-gray-300 my-2"></div>
+          <div className="mt-4">
+            {Object.values(providers).map((provider) => (
+                <div key={provider.id} className="mb-4">
+                  <button
+                      onClick={async () => {
+                        await signIn(provider.id);
+                      }}
+                      className="bg-twitterWhite pl-2 pr-4 py-1 text-black rounded-full flex items-center justify-center mx-auto"
+                      style={{ maxWidth: '80%' }}
+                  >
+                    <img
+                        src={
+                          provider.id === "google"
+                              ? "/google.png"
+                              : provider.id === "apple"
+                                  ? "/apple.png"
+                                  : provider.id === "facebook"
+                                      ? "/facebook.png"
+                                      : ""
+                        }
+                        alt=""
+                        className="h-7"
+                    />
+                    Sign in with {provider.name}
+                  </button>
+                </div>
+            ))}
+          </div>
+        </div>
+
+        {showModal && (
+            <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 bg-black">
+              <div className="bg-darkGreen p-16 rounded-lg shadow-md w-128 relative">
+                <button className="absolute top-3 right-2 font-bold text-darkGreen text-2xl rounded-tl-lg p-2 border-2 border-white" onClick={() => setShowModal(false)}>X</button>
+                <div className="text-center text-white text-2xl font-bold mb-8">
+                  Find your LitVerse Account
+                </div>
+                <div className="mb-8">
+                  <input
+                      type="text"
+                      placeholder="(UNDER CONSTRUCTION) Enter your email, username, or phone number"
+                      className="w-full p-3 rounded text-xs border border-white text-black"
+                  />
+                </div>
+                <div className="text-center">
+                  <button className="bg-black text-white p-2 rounded text-xl w-40">
+                    Next
+                  </button>
+                </div>
+              </div>
             </div>
-        ))}
+        )}
+
+
+
       </div>
   );
 }
@@ -39,3 +122,4 @@ export async function getServerSideProps() {
     props: { providers },
   };
 }
+
