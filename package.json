@@ -17,7 +17,6 @@
     "axios": "^0.27.2",
     "javascript-time-ago": "^2.5.7",
     "mongodb": "^4.9.0",
-    "mongoose": "^6.5.3",
     "multiparty": "^4.2.3",
     "next": "12.2.5",
     "next-auth": "^4.10.3",
