@@ -54,14 +54,16 @@ export default function RegisterPage({ providers }) {
     }, [status]);
 
     return (
-        <div className="flex items-center justify-center h-screen stripe-bg">
+        <div className="flex items-center justify-center h-screen lr-stripe-bg">
             <img
                 src="/logo_transparent_background.png"
                 alt="Logo"
                 className="absolute top-12 w-1/3"
                 style={{ right: '3rem' }}
+
+
             />
-            <div className="p-8 rounded-lg shadow-md w-96">
+            <div className="p-8 rounded-tr-lg shadow-md w-96" style={{ right: '3rem' }}>
                 <div className="mb-2">
                     <input
                         type="text"

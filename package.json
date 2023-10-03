@@ -15,8 +15,10 @@
     "aws-amplify": "^5.3.11",
     "aws-sdk": "^2.1467.0",
     "axios": "^0.27.2",
+    "bcrypt": "^5.1.1",
     "javascript-time-ago": "^2.5.7",
     "mongodb": "^4.9.0",
+    "mongoose": "^7.5.3",
     "multiparty": "^4.2.3",
     "next": "12.2.5",
     "next-auth": "^4.10.3",
@@ -27,7 +29,8 @@
     "react-flip-numbers": "^3.0.6",
     "react-spinners": "^0.13.4",
     "react-time-ago": "^7.2.1",
-    "tailwindcss": "^3.1.8"
+    "tailwindcss": "^3.1.8",
+    "validator": "^13.11.0"
   },
   "devDependencies": {
     "@types/webpack": "^5.28.3",

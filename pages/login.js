@@ -1,30 +1,44 @@
 import { useState } from 'react';
-import { getProviders, signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { getProviders, signIn, useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 export default function LoginPage({ providers }) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [showModal, setShowModal] = useState(false);
   const { data, status } = useSession();
   const router = useRouter();
 
-  if (status === "authenticated") {
-    router.push("/");
+  if (status === 'authenticated') {
+    router.push('/');
   }
 
-  //PASSWORD RULES:
-  // Minimum length of 8 characters.
-  //     At least one uppercase letter.
-  //     At least one lowercase letter.
-  //     At least one number.
-  //     At least one special character (e.g., !, @, #, $, etc.).
+  const handleSignIn = async () => {
+    const result = await signIn('credentials', {
+      redirect: false,
+      username,
+      password,
+    });
+    if (result.error) {
+      // Handle error (e.g., show a notification or message)
+    } else {
+      router.push('/');
+    }
+  };
 
   return (
-      <div className="flex items-center justify-center h-screen stripe-bg">
+      <div className="flex items-center justify-center h-screen rl-stripe-bg">
         <img
-            src="/logo_transparent_background.png"
+            src="/white_logo_transparent_background.png"
             alt="Logo"
             className="absolute top-12 w-1/3"
-            style={{ right: '3rem' }}
+            style={{left: '3rem' }}
+        />
+        <img
+            src="/spacedoodle.png"
+            alt="Logo"
+            className="absolute bottom-0 w-1/4"
+            style={{ right: '0rem' }}
         />
         <div className="p-8 rounded-lg shadow-md w-96">
           <div className="mb-2">
@@ -32,6 +46,8 @@ export default function LoginPage({ providers }) {
                 type="text"
                 placeholder="Username"
                 className="w-full p-3 rounded-full border border-blue-300"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
             />
           </div>
           <div className="mb-2">
@@ -39,10 +55,16 @@ export default function LoginPage({ providers }) {
                 type="password"
                 placeholder="Password"
                 className="w-full p-3 rounded-full border border-blue-300"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className="mb-2">
-            <button className="text-white p-2 rounded-full w-full" style={{ backgroundColor: '#373a3a' }}>
+            <button
+                className="text-white p-2 rounded-full w-full"
+                style={{ backgroundColor: '#373a3a' }}
+                onClick={handleSignIn}
+            >
               Sign In
             </button>
           </div>
@@ -52,7 +74,7 @@ export default function LoginPage({ providers }) {
             </button>
           </div>
           <div className="mb-2 text-center">
-            <button className="position-center text-black p-1 rounded-full w-56 bg-white" onClick={() => router.push('/register')}>
+            <button className="text-black p-1 rounded-full w-56 bg-white" onClick={() => router.push('/register')}>
               No Account? Register Here
             </button>
           </div>
@@ -109,9 +131,6 @@ export default function LoginPage({ providers }) {
               </div>
             </div>
         )}
-
-
-
       </div>
   );
 }
@@ -122,4 +141,3 @@ export async function getServerSideProps() {
     props: { providers },
   };
 }
-
