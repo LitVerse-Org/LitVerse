@@ -9,18 +9,18 @@ datasource db {
 
 model User {
   id          Int        @id @default(autoincrement())
-
-  comments    String?
-  email       String?    @unique
-  profileImgS3URL  String? // S3 URL for profile picture img
-  coverImgS3URL    String? // S3 URL for cover art img
-  backgroundImgS3URL    String? // S3 URL for background art img
+  email    String  @unique
+  username String  @unique
+  password    String?
   bio         String?
-  username    String?    @unique
   posts       Post[]
   likes       Like[]
   followedBy  Follower[] @relation("UserFollowers")
   following   Follower[] @relation("UserFollowing")
+  comments    String?
+  profileImgS3URL  String? // S3 URL for profile picture img
+  coverImgS3URL    String? // S3 URL for cover art img
+  backgroundImgS3URL    String? // S3 URL for background art img
 }
 
 model Follower {
