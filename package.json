@@ -16,7 +16,7 @@
     "aws-sdk": "^2.1467.0",
     "axios": "^0.27.2",
     "bcrypt": "^5.1.1",
-    "faker": "^6.6.6",
+    "faker": "^5.5.3",
     "javascript-time-ago": "^2.5.7",
     "mongodb": "^4.9.0",
     "mongoose": "^7.5.3",
