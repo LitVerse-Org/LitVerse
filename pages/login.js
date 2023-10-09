@@ -1,30 +1,39 @@
 import { useState } from 'react';
-import { getProviders, signIn, useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
+import { getProviders, signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export default function LoginPage({ providers }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showError, setShowError] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const { data, status } = useSession();
   const router = useRouter();
 
-  if (status === 'authenticated') {
-    router.push('/');
-  }
-
   const handleSignIn = async () => {
-    const result = await signIn('credentials', {
-      redirect: false,
-      username,
-      password,
-    });
-    if (result.error) {
-      // Handle error (e.g., show a notification or message)
+    // Your logic to fetch the user from your database.
+    const userFromDb = await fetchUserFromDb(username);
+
+    if (userFromDb) {
+      const isPasswordCorrect = await bcrypt.compare(password, userFromDb.password);
+
+      if (isPasswordCorrect) {
+        // Your logic to log the user in and possibly set a session.
+        loginUser(userFromDb);
+      } else {
+        setShowError(true);
+        setTimeout(() => setShowError(false), 3000);  // Hide the error message after 3 seconds
+      }
     } else {
-      router.push('/');
+      setShowError(true);
+      setTimeout(() => setShowError(false), 3000);  // Hide the error message after 3 seconds
     }
   };
+
+
+  if (status === "authenticated") {
+    router.push("/");
+  }
 
   return (
       <div className="flex items-center justify-center h-screen rl-stripe-bg">
@@ -67,6 +76,14 @@ export default function LoginPage({ providers }) {
             >
               Sign In
             </button>
+            {showError && (
+                <div
+                    className="text-red-500 text-center my-2"
+                    style={{ animation: 'fadeIn 0.5s ease-out', animationFillMode: 'forwards' }}
+                >
+                  Incorrect Username or Password
+                </div>
+            )}
           </div>
           <div className="mb-2 text-center">
             <button className="text-black p-1 rounded-full w-56 bg-white" onClick={() => setShowModal(true)}>
@@ -74,7 +91,7 @@ export default function LoginPage({ providers }) {
             </button>
           </div>
           <div className="mb-2 text-center">
-            <button className="text-black p-1 rounded-full w-56 bg-white" onClick={() => router.push('/register')}>
+            <button className="position-center text-black p-1 rounded-full w-56 bg-white" onClick={() => router.push('/register')}>
               No Account? Register Here
             </button>
           </div>

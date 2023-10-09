@@ -6,6 +6,8 @@ export default function RegisterPage({ providers }) {
     const { data, status } = useSession();
     const router = useRouter();
     const [showModal, setShowModal] = useState(false);
+    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [validLength, setValidLength] = useState(false);
     const [hasUpper, setHasUpper] = useState(false);
@@ -16,6 +18,8 @@ export default function RegisterPage({ providers }) {
     const [passwordMismatch, setPasswordMismatch] = useState(false);
     const [phoneNumber, setPhoneNumber] = useState('');
     const [phoneError, setPhoneError] = useState(false);
+    const [serverError, setServerError] = useState('');
+
 
     const handleChange = (e) => {
         const val = e.target.value;
@@ -39,12 +43,25 @@ export default function RegisterPage({ providers }) {
         }
     };
 
-    const handleRegister = () => {
+    const handleRegister = async () => {
         if (password !== confirmPassword) {
             setPasswordMismatch(true);
             return;
         }
-        // Continue with the registration process
+
+        const res = await fetch('/api/registrationHandler', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, username, password })
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            signIn('credentials', { email, password, callbackUrl: '/home' });
+        } else {
+            setServerError(data.error);
+        }
     };
 
     useEffect(() => {
@@ -60,8 +77,6 @@ export default function RegisterPage({ providers }) {
                 alt="Logo"
                 className="absolute top-12 w-1/3"
                 style={{ right: '3rem' }}
-
-
             />
             <div className="p-8 rounded-tr-lg shadow-md w-96" style={{ right: '3rem' }}>
                 <div className="mb-2">
@@ -69,6 +84,8 @@ export default function RegisterPage({ providers }) {
                         type="text"
                         placeholder="Email"
                         className="w-full p-3 rounded-lg border border-blue-300 text-black"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
                 <div className="mb-2">
@@ -76,6 +93,8 @@ export default function RegisterPage({ providers }) {
                         type="text"
                         placeholder="Username"
                         className="w-full p-3 rounded-lg border border-blue-300 text-black"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                     />
                 </div>
                 <div className="mb-2">
@@ -114,6 +133,7 @@ export default function RegisterPage({ providers }) {
                     >
                         Register
                     </button>
+                    {serverError && <div className="text-red-500">{serverError}</div>}
                 </div>
                 <div className="border-b border-gray-300 my-2"></div>
                 <div className="mt-2">
@@ -148,18 +168,6 @@ export default function RegisterPage({ providers }) {
                         Login Instead
                     </button>
                 </div>
-                {password && (
-                    <div className="password-requirements">
-                        <p>Password must have:</p>
-                        <ul>
-                            <li className={validLength ? 'text-green-500' : 'text-red-500'}>At least 8 characters</li>
-                            <li className={hasUpper ? 'text-green-500' : 'text-red-500'}>An uppercase letter</li>
-                            <li className={hasLower ? 'text-green-500' : 'text-red-500'}>A lowercase letter</li>
-                            <li className={hasNumber ? 'text-green-500' : 'text-red-500'}>A number</li>
-                            <li className={hasSpecial ? 'text-green-500' : 'text-red-500'}>A special character</li>
-                        </ul>
-                    </div>
-                )}
             </div>
         </div>
     );
