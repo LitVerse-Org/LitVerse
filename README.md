@@ -2,6 +2,11 @@
 
 This guide will walk you through setting up your local development environment for the Litverse project.
 
+### Quick Notes
+- Run this command in your directory to get file structure:
+    - `tree -L 4 -I 'node_modules|yarn.lock|amplify'`
+    - You can copy and paste this file structure into ChatGPT so that it can help you much better.
+
 ## Prerequisites
 
 - **PostgreSQL 16** installed on your local machine. [download from here](https://www.postgresql.org/download/)
@@ -40,7 +45,7 @@ Navigate to the project directory in your terminal and run:
 npm install
 ```
 
-This will install all the necessary dependencies for the project.
+- This will install all the necessary dependencies for the project.
 
 ### Step 5: Start the Development Server
 
@@ -50,7 +55,7 @@ In the project directory, run:
 npm run dev
 ```
 
-Now, navigate to `http://localhost:3000/{page file name}` in your browser to see the app running.
+Now, navigate to `http://localhost:3000/{page file name}` in your browser to see the app running, and append the page file name that you want to view (optional).
 
 ## Database Visualizer
 
@@ -63,3 +68,13 @@ npx prisma studio
 ```
 
 After running the command, you can access the database visualizer at `http://localhost:5555/`.
+
+
+### Step 6: Populate Your Database with Mock(fake) Users
+
+Run this command (depending on your OS) to populate the database with 100 mock users:
+- Mac command: `curl -X POST http://localhost:3000/api/createMockUsers>`
+- Windows command: `Invoke-RestMethod -Method Post -Uri http://localhost:3000/api/createMockUsers`
+    - Make sure that your frontend is running on port 3000 when you execute this command.
+    - This will create 100 mock users in the database. You can view them in the database visualizer (Prisma Studio).
+    - All this command is doing is triggering the createMockUsers function in the createMockUsers file in the api folder. You can view the code in the api folder to see how it works.
