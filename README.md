@@ -24,6 +24,9 @@ If you haven't already installed PostgreSQL 16, download and install it from the
 Once PostgreSQL 16 is installed:
 
 1. Open your terminal or command prompt.
+2. MAKE SURE YOUR .ENV DATABASE_URL PORT MATCHES YOUR PSQL PORT.
+   3.  example, if: DATABASE_URL="postgresql://dev:litverse123@localhost:`5431`/litverseDB"
+   4. Then my PSQL server also needs to be running on port `5431`
 2. Access the PostgreSQL command line using the `psql` command.
 3. Create a new database named `litverseDB`:
 
