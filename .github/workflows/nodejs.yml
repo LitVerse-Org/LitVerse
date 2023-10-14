@@ -1,0 +1,65 @@
+name: Node.js CI
+
+on:
+  pull_request:
+    branches:
+      - main
+      - development
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: dev
+          POSTGRES_PASSWORD: litverse123
+          POSTGRES_DB: litverseDB
+        ports:
+          - 5431:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Cache Node.js modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-node-
+            ${{ runner.OS }}-
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Setup Prisma
+        env:
+          DATABASE_URL: postgresql://dev:litverse123@localhost:5431/litverseDB
+        run: npx prisma migrate dev
+
+      - name: Run development server
+        run: npm run dev &
+        continue-on-error: true
+
+      - name: Check if server is running
+        run: sleep 1m; curl http://localhost:3000
+        continue-on-error: true
+
+      - name: Stop development server
+        if: always()
+        run: pkill node
