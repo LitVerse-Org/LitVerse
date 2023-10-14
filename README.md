@@ -1,103 +1,55 @@
 # Local Development Environment Setup
 
-This guide will walk you through setting up your local development environment for the Litverse project.
-
-### Quick Setup Steps
-1. Clone the `development` repo
-2. Open terminal and in our project:
-2. Run `npm install`
-2. Run `npx prisma migrate dev --preview-feature`
-2. Run `npm run dev`
-   3. This will start the frontend and backend servers.
-   4. Go to localhost:3000 to see the frontend.
-4. Open another terminal and in our project:
-   3. Run `npx prisma studio`
-   4. Go to localhost:5555 to see the database visualizer.
-5. At this point, you're ready to develop.
-   6. Now, decide on what feature you want to develop and then create a branch for it. Make your changes, test your changes, then submit a PR once your changes are complete and working.
-
-#### Optional (Create 100 Mock Users)
-6. Open another terminal and in our project:
-6. Run `curl -X POST http://localhost:3000/api/createMockUsers`
-   5. This will create 100 mock users in the database. You can view them in the database visualizer (Prisma Studio).
-   6. All this command is doing is triggering the createMockUsers function in the createMockUsers file in the api folder. You can view the code in the api folder to see how it works.
-
-### Quick Notes
-- Run this command in your directory to get file structure:
-    - `tree -L 4 -I 'node_modules|yarn.lock|amplify'`
-    - You can copy and paste this file structure into ChatGPT so that it can help you much better.
+This guide will walk you through setting up your local development environment for the LitVerse project.
 
 ## Prerequisites
-
 - **PostgreSQL 16** installed on your local machine. [download from here](https://www.postgresql.org/download/)
+  - If you are a mac user, also download [postgres.app](https://postgresapp.com/) for a very simple and good GUI for running your PSQL server. 
 - **Node.js and npm** installed. If you don't have them, you can download and install from the [Node.js official website](https://nodejs.org/).
-- You have cloned the "development" branch from the repository.
-
-## Database Setup
-
-### Step 1: Install PostgreSQL 16
-
-If you haven't already installed PostgreSQL 16, download and install it from the [official PostgreSQL website](https://www.postgresql.org/download/).
-
-### Step 2: Create a Local Database
-
-Once PostgreSQL 16 is installed:
-
-1. Open your terminal or command prompt.
-2. MAKE SURE YOUR .ENV DATABASE_URL PORT MATCHES YOUR PSQL PORT.
-    3.  example, if: DATABASE_URL="postgresql://dev:litverse123@localhost:`5431`/litverseDB"
-    4. Then my PSQL server also needs to be running on port `5431`
-2. Access the PostgreSQL command line using the `psql` command.
-3. Create a new database named `litverseDB`:
-
-```sql
-CREATE DATABASE litverseDB;
-```
-
-## Local Environment Setup
-
-### Step 3: Branching
-
-Ensure you're working in a new branch created from the "development" branch to avoid disrupting the main codebase.
-
-### Step 4: Install Dependencies
-
-Navigate to the project directory in your terminal and run:
-
-```bash
-npm install
-```
-
-- This will install all the necessary dependencies for the project.
-
-### Step 5: Start the Development Server
-
-In the project directory, run:
-
-```bash
-npm run dev
-```
-
-Now, navigate to `http://localhost:3000/{page file name}` in your browser to see the app running, and append the page file name that you want to view (optional).
-
-## Database Visualizer
-
-### Step 6: View Your Database
-
-To visualize and interact with your database, run:
-
-```bash
-npx prisma studio
-```
-
-After running the command, you can access the database visualizer at `http://localhost:5555/`.
+- You have cloned the "development" branch from the repository, and are in this new, current repo and NOT THE OLD ONE - https://github.com/LitVerse-Org/litverse.git
+- (OPTIONAL) [Postman](https://www.postman.com/) or [Insomnia](https://insomnia.rest/) for testing API calls. They are useful and very common tools in industry, but are absolutely not necessary to use. Just can be helpful tools.
+  - It does the same thing as commands like `curl -X POST http://localhost:3000/api/createMockUsers`, where you're just externally triggering an API call to see if its doing what you want it to or not, and lets you visualize everything there. Very useful if you take just a second to learn it.
 
 
-### Step 6: Populate Your Database with Mock(fake) Users
+### Quick Setup Steps
+1. Open terminal, navigate to the project directory
+2. Run `npm install`
+3. Run `npm run dev`
+   1. This will run the frontend server.
+   2. Go to http://localhost:3000/login to see the frontend while you develop.
+4. Open another terminal, navigate to the project directory
+   1. Start your PSQL server through the mac "postgres" app, windows "pgadmin" app, or through the terminal. 
+      1. There are many ways to run your psql server, but just make sure the port it is running on is the same as the port in the database_url in the .env file in the project (5431 or 5432), and in the command used below. They just need to all be the same port.
+   2. Run `psql -h localhost -U postgres -p 5431`
+      1. Run `CREATE ROLE dev WITH LOGIN PASSWORD 'litverse123'; ALTER ROLE dev CREATEDB;`
+      2. Run `quit` to leave this psql CLI and go back to normal terminal CLI
+   3. Run `createdb litverseDB` 
+   4. Run `npm install prisma --save-dev`
+   5. Run `npx prisma generate`
+   6. Run `npx prisma migrate dev`
+   7. Run `npx prisma studio. `
+   8. Go to http://localhost:5555/ or http://localhost:5556/ (whichever it says in your terminal) to see the database visualizer.
+      1. Make sure the models you see match whats in our prisma.schema file, just to make sure you're running the right stuff.
+5. At this point, you're ready to develop.
+   1. Now, decide on what feature you want to develop and then create a branch for it. Make your changes, test your changes, then submit a PR once your changes are complete and working.
+      1. Be detailed and concise in your PR, so that i can clearly see what it's for
 
-Run this command (depending on your OS) to populate the database with 100 mock users:
-- Mac command: `curl -X POST http://localhost:3000/api/createMockUsers>`
-- Windows command: `Invoke-RestMethod -Method Post -Uri http://localhost:3000/api/createMockUsers`
-    - Make sure that your frontend is running on port 3000 when you execute this command.
-    - This will create 100 mock users in the database. You can view them in the database visualizer (Prisma Studio).
-    - All this command is doing is triggering the createMockUsers function in the createMockUsers file in the api folder. You can view the code in the api folder to see how it works.
+#### Optional (Create 100 Mock Users)
+1. While your frontend (...:3000), prisma studio(...:5555), and psql server are all running, open another terminal and in our project directory:
+2. Run `curl -X POST http://localhost:3000/api/createMockUsers`
+   1. (Different command for windows. Can also use Postman to trigger this. 
+   2. This will create 100 mock users in the database. You can view them in the database visualizer (Prisma Studio).
+   3. All this command is doing is triggering the createMockUsers function in the createMockUsers.js file in the api folder. You can view the code in the api folder to see how it works.
+
+### Prompt Help Template
+- First, Run this command in your directory to get file structure:
+    - `tree -L 8 -I 'node_modules|yarn.lock|amplify'`
+      - You can copy and paste this file structure into ChatGPT so that it can help you much better.
+- Prompt Help Template {copy and paste this into prompt, then edit}:
+  - ##### "{Copy and paste the tree file structure you just got}
+  - ##### I am a member of a student group developing a literature/art-focused microblogging webapp called "LitVerse". We are working off of feature branches in a normal github workflow, using pull requests to submit changes.
+  - ##### Our tech stack is: Next.js, React, Express, TailwindCSS, Prisma, PostgreSQL16
+  - ##### {Insert any other relevant context here, the more details it has the better it can help you}
+  - ##### My current goal is to: {insert your current goal}
+  - ##### Given the details I have just provided you, please guide me with detailed steps to reach this goal. 
+  - ##### Please remember all of this specific context throughout this conversation to provide the most accurate and tailored responses possible."
