@@ -11,7 +11,7 @@ export default function Home() {
             alignItems: "center"
         }}>
             <span style={{ color: "green", fontSize: "2em" }}>
-                HOME
+                HOME PAGE :)
             </span>
         </div>
     );

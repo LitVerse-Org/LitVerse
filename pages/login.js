@@ -38,7 +38,7 @@ export default function LoginPage({ providers }) {
   return (
       <div className="flex items-center justify-center h-screen rl-stripe-bg">
         <img
-            src="/white_logo_transparent_background.png"
+            src="/doodle1.png"
             alt="Logo"
             className="absolute top-12 w-1/3"
             style={{left: '3rem' }}
