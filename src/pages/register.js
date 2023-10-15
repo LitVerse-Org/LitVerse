@@ -19,6 +19,9 @@ export default function RegisterPage({ providers }) {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [phoneError, setPhoneError] = useState(false);
     const [serverError, setServerError] = useState('');
+    const [showErrorPopup, setShowErrorPopup] = useState(false); // State for the error popup
+    const [errorMessage, setErrorMessage] = useState(''); // State for the error message
+
 
 
     const handleChange = (e) => {
@@ -49,7 +52,7 @@ export default function RegisterPage({ providers }) {
             return;
         }
 
-        const res = await fetch('/api/registrationHandler', {
+        const res = await fetch('/api/userOperations/registrationHandler', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, username, password })
@@ -58,9 +61,14 @@ export default function RegisterPage({ providers }) {
         const data = await res.json();
 
         if (data.success) {
-            signIn('credentials', { email, password, callbackUrl: '/home' });
+            signIn('credentials', { email, password, callbackUrl: '/home' })
+                .then(() => {
+                    router.push('/home'); // Navigate to /home upon successful login
+                });
         } else {
             setServerError(data.error);
+            setShowErrorPopup(true); // Display the error popup
+            setErrorMessage(data.error); // Set the error message
         }
     };
 
@@ -169,7 +177,17 @@ export default function RegisterPage({ providers }) {
                     </button>
                 </div>
             </div>
+            {showErrorPopup && (
+                <div className="fixed inset-0 flex items-center justify-center z-50">
+                    <div className="bg-white p-4 rounded-lg shadow-lg font-black font-bold">
+                        <h2 className="font-bold font-black">Error</h2>
+                        <p className="font-bold font-black">{errorMessage}</p>
+                        <button onClick={() => setShowErrorPopup(false)} className="bg-blend-color-burn bg-amber-400">Close</button>
+                    </div>
+                </div>
+            )}
         </div>
+
     );
 }
 

@@ -3,7 +3,7 @@ import { getProviders, signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
 export default function LoginPage({ providers }) {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showError, setShowError] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -12,7 +12,7 @@ export default function LoginPage({ providers }) {
 
   const handleSignIn = async () => {
     // Your logic to fetch the user from your database.
-    const userFromDb = await fetchUserFromDb(username);
+    const userFromDb = await fetchUserFromDb(email);
 
     if (userFromDb) {
       const isPasswordCorrect = await bcrypt.compare(password, userFromDb.password);
@@ -53,10 +53,10 @@ export default function LoginPage({ providers }) {
           <div className="mb-2">
             <input
                 type="text"
-                placeholder="Username"
+                placeholder="Email"
                 className="w-full p-3 rounded-full border border-blue-300"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="mb-2">
@@ -81,13 +81,13 @@ export default function LoginPage({ providers }) {
                     className="text-red-500 text-center my-2"
                     style={{ animation: 'fadeIn 0.5s ease-out', animationFillMode: 'forwards' }}
                 >
-                  Incorrect Username or Password
+                  Incorrect Email or Password
                 </div>
             )}
           </div>
           <div className="mb-2 text-center">
             <button className="text-black p-1 rounded-full w-56 bg-white" onClick={() => setShowModal(true)}>
-              Forgot Username/Password?
+              Forgot Email/Password?
             </button>
           </div>
           <div className="mb-2 text-center">
