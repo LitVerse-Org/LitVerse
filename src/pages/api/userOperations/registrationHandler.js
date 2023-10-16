@@ -1,8 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from '/prisma';import { getSession } from 'next-auth/react';
 import bcrypt from "bcrypt";
 import validator from "validator";
-
-const prisma = new PrismaClient();
 
 export default async function registrationHandler(req, res) {
     if (req.method === 'POST') {

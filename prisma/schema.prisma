@@ -41,12 +41,18 @@ model Like {
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   content   String // For Markdown-formatted text content like stories and poems
   mediaUrl  String? // S3 URL for images or videos
   mediaType String? // Type of media: 'image', 'video', 'none'
   userId    Int
-  user      User     @relation(fields: [userId], references: [id])
+  user      User    @relation(fields: [userId], references: [id])
   likes     Like[]
-  tags      String[] // Array of tags (categories, like "poem", "story", "art", etc.)
+  tags      Tag[]   @relation("PostToTag") // Establish many-to-many relation to Tag
+}
+
+model Tag {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  posts Post[] @relation("PostToTag") // Establish many-to-many relation to Post
 }
