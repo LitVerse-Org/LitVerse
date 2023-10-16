@@ -1,22 +1,23 @@
 import React, { useEffect } from "react";
-import { getSession, signOut } from "next-auth/react";
-import { useSession } from "next-auth/react";
+import { getSession, useSession, signOut } from "next-auth/react";
 
 export default function Home() {
+    const handleLogout = async () => {
+        await signOut(); // Call the signOut function to log the user out
+    };
+
+    const { data: session, status } = useSession();
+
     useEffect(() => {
-        const fetchData = async () => {
+        async function fetchData() {
             const session = await getSession();
-            console.log("localhost:3000/Home Page Session log: ", session);
-        };
+            console.log("session in Home page:", session);
+            console.log("session.token in Home page:", session?.token);
+        }
 
         fetchData();
     }, []);
 
-    const { data: session, status } = useSession();
-
-    const handleLogout = async () => {
-        await signOut(); // Call the signOut function to log the user out
-    };
 
     return (
         <div>

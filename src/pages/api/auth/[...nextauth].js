@@ -54,7 +54,7 @@ export default NextAuth({
 
             //console.log("signIn Email:", userEmail);
             //console.log("signIn Account:", user.account);
-            console.log("signIn Profile:", user.profile);
+            //console.log("signIn Profile:", user.profile);
 
             if (userEmail && validator.isEmail(userEmail)) {
                 const existingUser = await prisma.user.findFirst({
@@ -86,13 +86,14 @@ export default NextAuth({
         },
         async session(session, token) {
             console.log("session Session:", session);
-            console.log("session Token:", token);
+            console.log("session Token:", session.token.jti);
 
             if (session?.user && token?.sub) {
                 session.user.id = token.sub;
             }
 
-            session.token = token;  // <-- Add this line
+            session.token = token;
+            console.log("*** `session.token`: ", session.token)
             return session;
         },
     },
