@@ -1,0 +1,110 @@
+.sidebarContainer {
+    width: 200px; /* Adjust as needed */
+    height: 100vh;
+    background-color: #0b0b0a; /* Light gray */
+    border-right: 1px solid #d43d3d27; /* Border color */
+    padding: 20px; 
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centering icons horizontally */
+}
+
+.sidebarItem {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: #bfdfdf; /* Color of the icons */
+    font-size: 24px;  /* Adjust the size of the icons */
+}
+
+.sidebarItem:hover {
+    background-color: #c949b02c; /* Adjust hover color as needed */
+}
+
+.composeButton {
+    background-color: #97ccd1; /* Adjust button color */
+    color: hsl(190, 42%, 24%);
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.composeButton:hover {
+    background-color: #c764e2; /* Darker shade for hover */
+}
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Make sure it's above other content */
+  }
+  
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    position: relative;
+}
+.modal-content button {
+    margin: 5px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.settings-icon {
+    font-size: 24px; 
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  
+  .dropdown-box {
+    position: absolute;
+    top: 40px;
+    right: 10px;
+    background-color: white; 
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    width: 200px;
+    border: 1px solid #ccc;
+  }
+  
+  .dropdown-box button {
+    display: block;
+    width: 100%;
+    text-align: left; 
+    background-color: transparent;
+    border: none;
+    padding: 10px 15px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    border-top: 1px solid #ccc;
+  }
+  
+  .dropdown-box button:first-child {
+    border-top: none;
+  }
+  
+  .dropdown-box button:hover {
+    background-color: #e6e6e6; 
+  }
+
+
+
+
