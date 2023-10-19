@@ -28,7 +28,7 @@ This guide will walk you through setting up your local development environment f
    5. Run `npx prisma generate`
    6. Run `npx prisma migrate dev`
    7. Run `npx prisma studio. `
-   8. Go to http://localhost:5555/ or http://localhost:5556/ (whichever it says in your terminal) to see the database visualizer.
+   8. Go to or http://localhost:5556/ (whichever it says in your terminal) to see the database visualizer.
       1. Make sure the models you see match whats in our prisma.schema file, just to make sure you're running the right stuff.
 5. At this point, you're ready to develop.
    1. Now, decide on what feature you want to develop and then create a branch for it. Make your changes, test your changes, then submit a PR once your changes are complete and working.
