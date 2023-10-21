@@ -10,35 +10,35 @@ export default function LoginPage({ providers }) {
   const { data, status } = useSession();
   const router = useRouter();
 
-  const handleSignIn = async () => {
-    // Your logic to fetch the user from your database.
-    const userFromDb = await fetchUserFromDb(email);
+  const handleSignIn = async (e) => {
+    e.preventDefault();  // Prevent default form submission
 
-    if (userFromDb) {
-      const isPasswordCorrect = await bcrypt.compare(password, userFromDb.password);
+    const res = await fetch('/api/userOperations/loginHandler', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
 
-      if (isPasswordCorrect) {
-        // Your logic to log the user in and possibly set a session.
-        loginUser(userFromDb);
-      } else {
-        setShowError(true);
-        setTimeout(() => setShowError(false), 3000);  // Hide the error message after 3 seconds
-      }
+    const data = await res.json();
+
+    if (data.id) {
+      signIn('credentials', { email, password, callbackUrl: '/authtest' })
+          .then(() => {
+            router.push('/authtest'); // Navigate to /authtest upon successful login
+          });
     } else {
-      setShowError(true);
-      setTimeout(() => setShowError(false), 3000);  // Hide the error message after 3 seconds
+      setShowError(true); // Display an error message
     }
   };
 
-
   if (status === "authenticated") {
-    router.push("/");
+    router.push("/authtest");
   }
 
   return (
       <div className="flex items-center justify-center h-screen rl-stripe-bg">
         <img
-            src="/doodle1.png"
+            src="/white_logo_dark_background.png"
             alt="Logo"
             className="absolute top-12 w-1/3"
             style={{left: '3rem' }}
@@ -54,7 +54,7 @@ export default function LoginPage({ providers }) {
             <input
                 type="text"
                 placeholder="Email"
-                className="w-full p-3 rounded-full border border-blue-300"
+                className="w-full p-3 rounded-full border border-blue-300 text-black"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
             />
@@ -63,7 +63,7 @@ export default function LoginPage({ providers }) {
             <input
                 type="password"
                 placeholder="Password"
-                className="w-full p-3 rounded-full border border-blue-300"
+                className="w-full p-3 rounded-full border border-blue-300 text-black"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
@@ -72,7 +72,7 @@ export default function LoginPage({ providers }) {
             <button
                 className="text-white p-2 rounded-full w-full"
                 style={{ backgroundColor: '#373a3a' }}
-                onClick={handleSignIn}
+                onClick={handleSignIn} // Updated this line
             >
               Sign In
             </button>

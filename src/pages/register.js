@@ -52,23 +52,32 @@ export default function RegisterPage({ providers }) {
             return;
         }
 
-        const res = await fetch('/api/userOperations/registrationHandler', {
+        try {
+            const res = await fetch('/api/userOperations/registrationHandler', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, username, password })
-        });
+            });
 
-        const data = await res.json();
+            const data = await res.json();
 
-        if (data.success) {
-            signIn('credentials', { email, password, callbackUrl: '/home' })
-                .then(() => {
-                    router.push('/home'); // Navigate to /home upon successful login
+            if (res.status === 200 && data.success) {
+                const signInSuccess = await signIn('credentials', {
+                    email,
+                    password,
+                    redirect: false,
                 });
-        } else {
-            setServerError(data.error);
-            setShowErrorPopup(true); // Display the error popup
-            setErrorMessage(data.error); // Set the error message
+
+                if (signInSuccess && signInSuccess.error) {
+                    setServerError(signInSuccess.error);
+                } else {
+                    router.push('/home');
+                }
+            } else {
+                setServerError(data.error);
+            }
+        } catch (error) {
+            setServerError(error.message);
         }
     };
 
@@ -145,30 +154,32 @@ export default function RegisterPage({ providers }) {
                 </div>
                 <div className="border-b border-gray-300 my-2"></div>
                 <div className="mt-2">
-                    {Object.values(providers).map((provider) => (
-                        <div key={provider.id} className="mb-4">
-                            <button
-                                onClick={async () => {
-                                    await signIn(provider.id);
-                                }}
-                                className="bg-twitterWhite pl-2 pr-4 py-1 text-black rounded-full flex items-center justify-center w-full"
-                            >
-                                <img
-                                    src={
-                                        provider.id === "google"
-                                            ? "/google.png"
-                                            : provider.id === "apple"
-                                                ? "/apple.png"
-                                                : provider.id === "facebook"
-                                                    ? "/facebook.png"
-                                                    : ""
-                                    }
-                                    alt=""
-                                    className="h-7"
-                                />
-                                Register with {provider.name}
-                            </button>
-                        </div>
+                    {Object.values(providers || {}).map((provider) => (
+                        provider.id !== 'credentials' && (  // Skip the credentials provider
+                            <div key={provider.id} className="mb-4">
+                                <button
+                                    onClick={async () => {
+                                        await signIn(provider.id);
+                                    }}
+                                    className="bg-twitterWhite pl-2 pr-4 py-1 text-black rounded-full flex items-center justify-center w-full"
+                                >
+                                    <img
+                                        src={
+                                            provider.id === "google"
+                                                ? "/google.png"
+                                                : provider.id === "apple"
+                                                    ? "/apple.png"
+                                                    : provider.id === "facebook"
+                                                        ? "/facebook.png"
+                                                        : ""
+                                        }
+                                        alt=""
+                                        className="h-7"
+                                    />
+                                    Register with {provider.name}
+                                </button>
+                            </div>
+                        )
                     ))}
                 </div>
                 <div className="text-center mt-4">
