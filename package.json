@@ -19,12 +19,8 @@
     "fontawesome-free": "^1.0.4",
     "javascript-time-ago": "^2.5.9",
     "next": "13.5.4",
-<<<<<<< Updated upstream
     "next-auth": "^4.10.3",
     "quill": "^1.3.7",
-=======
-    "next-auth": "^4.23.2",
->>>>>>> Stashed changes
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-quill": "^2.0.0",
