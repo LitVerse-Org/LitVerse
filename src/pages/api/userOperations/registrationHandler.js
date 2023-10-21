@@ -32,12 +32,11 @@ export default async function registrationHandler(req, res) {
                     password: hashedPassword
                 }
             });
-
             return res.status(200).json({ success: true });
         } catch (error) {
+            console.error("Registration Error:", error.message);
             return res.status(400).json({ success: false, error: error.message });
         }
     }
-
-    return res.status(405).end();  // Method Not Allowed
+    return res.status(405).end();
 }

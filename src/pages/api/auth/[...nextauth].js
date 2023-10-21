@@ -25,16 +25,25 @@ export default NextAuth({
                 email: { label: "Email", type: "text" },
                 password: { label: "Password", type: "password" }
             },
-            async authorize(credentials) {
-                const user = await prisma.user.findFirst({
+            authorize: async (credentials) => {
+                const { email, password } = credentials;
+
+                if (!validator.isEmail(email)) {
+                    return null;
+                }
+
+                const user = await prisma.user.findUnique({
                     where: {
-                        email: credentials.email,
+                        email,
                     },
                 });
 
-                if (user && await bcrypt.compare(credentials.password, user.password)) {
-                    return { id: user.id.toString(), email: user.email, name: user.username };
+                if (user && await bcrypt.compare(password, user.password)) {
+                    //console.log("inside `authorize async(credentials)` callback - Valid credentials, user variable assigned to `prisma.user.findUnique where: email`: ", user)
+                    return { id: user.id, email: user.email, username: user.username };
+
                 } else {
+                    console.log("Invalid credentials")
                     return null;
                 }
             }
@@ -48,52 +57,32 @@ export default NextAuth({
     },
     callbacks: {
         async signIn(user, account, profile) {
-            //console.log("signIn User object structure:", JSON.stringify(user, null, 2));
-
-            const userEmail = user.user?.email;
-
-            //console.log("signIn Email:", userEmail);
-            //console.log("signIn Account:", user.account);
-            //console.log("signIn Profile:", user.profile);
-
-            if (userEmail && validator.isEmail(userEmail)) {
-                const existingUser = await prisma.user.findFirst({
-                    where: {
-                        email: userEmail,
-                    },
-                });
-
-                if (existingUser) {
-                    return true;
-                }
-
-                if (user.user?.name) {
-                    await prisma.user.create({
-                        data: {
-                            email: userEmail,
-                            username: user.user.name,
-                        },
-                    });
+            console.log("signIn callback triggered in [...nextauth].js");
+            //console.log("SignIn User:", { user, account, profile });
+            if (account && account.provider === 'credentials') {
+                if (user && user.id && user.email && user.username) {
+                    console.log("Valid sign in for: ", user);
                     return true;
                 } else {
-                    console.log("User name is undefined");
                     return false;
                 }
-            } else {
-                console.log("Invalid email");
-                return false;
             }
+            return true;
         },
         async session(session, token) {
-            console.log("session Session:", session);
-            console.log("session Token:", session.token.jti);
-
-            if (session?.user && token?.sub) {
-                session.user.id = token.sub;
+            console.log("session callback triggered in [...nextauth].js");
+            if (token?.sub) {
+                session.user.id = token.sub;  // The standard 'sub' field
+                session.user.userID = token.sub;  // Your custom 'userID' field
             }
-
-            session.token = token;
-            console.log("*** `session.token`: ", session.token)
+            if (token?.email) {
+                session.user.email = token.email;
+            }
+            if (token?.username) {
+                session.user.username = token.username;
+            }
+            //console.log("`[...nextauth].js` - Session token:", session);
+            console.log("Session token successfully created in [...nextauth.js]: ", session);
             return session;
         },
     },

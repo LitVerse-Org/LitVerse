@@ -46,7 +46,7 @@ This guide will walk you through setting up your local development environment f
     - `tree -L 8 -I 'node_modules|yarn.lock|amplify'`
       - You can copy and paste this file structure into ChatGPT so that it can help you much better.
 - Prompt Help Template {copy and paste this into prompt, then edit}:
-  - ##### "{Copy and paste the tree file structure you just got}
+  - ##### "Here is my Next.js, React, Express, TailwindCSS, Prisma, PostgreSQL16 project file structure: {Paste the tree file structure you just got}
   - ##### I am a member of a student group developing a literature/art-focused microblogging webapp called "LitVerse". We are working off of feature branches in a normal github workflow, using pull requests to submit changes.
   - ##### Our tech stack is: Next.js, React, Express, TailwindCSS, Prisma, PostgreSQL16
   - ##### {Insert any other relevant context here, the more details it has the better it can help you}
