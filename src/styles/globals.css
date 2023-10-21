@@ -11,7 +11,7 @@ input:focus,
 button:focus {
   outline: none;
   border: 2px solid blue;
-  box-shadow: 0 0 5px blue;
+  box-shadow: 0 0 5px rgb(2, 2, 2);
 }
 
 /*.bg-rainbow {*/

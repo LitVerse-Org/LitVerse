@@ -1,4 +1,5 @@
-import prisma from '/prisma';import { getSession } from 'next-auth/react';
+import prisma from '/prisma';
+import { getSession } from 'next-auth/react';
 import bcrypt from "bcrypt";
 import validator from "validator";
 
