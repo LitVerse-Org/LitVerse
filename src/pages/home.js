@@ -11,11 +11,11 @@ export default function Home() {
     useEffect(() => {
         async function fetchData() {
             const session = await getSession();
-            console.log("session in Home page:", session);
-            console.log("session.token in Home page:", session?.token);
+            console.log("Current Session token in home.js page from `getSession()`: ", session);
         }
-
         fetchData();
+        console.log("Session object from useSession:", session);
+        console.log("Status from useSession:", status);
     }, []);
 
 
@@ -26,7 +26,8 @@ export default function Home() {
             ) : status === "authenticated" ? (
                 <div>
                     <p>
-                        Signed in as {session.user?.email || "Unknown"} {/* Check if session.user exists */}
+                        {console.log('Rendering session.user:', session.user)}
+                        Signed in as {session.user?.email || session.user?.username || "Unknown"}
                     </p>
                     <button onClick={handleLogout}>Logout</button>
                 </div>
