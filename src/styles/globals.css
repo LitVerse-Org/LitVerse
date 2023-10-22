@@ -14,9 +14,33 @@ button:focus {
   box-shadow: 0 0 5px rgb(2, 2, 2);
 }
 
-/*.bg-rainbow {*/
-/*    background: grey;*/
-/*}*/
+@font-face {
+    font-family: 'RobotoSlab';
+    src: url('/fonts/RobotoSlab/RobotoSlab-Regular.ttf') format('truetype');
+    font-weight: 400; /* Regular */
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'RobotoSlab';
+    src: url('/fonts/RobotoSlab/RobotoSlab-Regular.ttf') format('truetype');
+    font-weight: 700; /* Bold */
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ... Similarly, add for other weights ... */
+
+@font-face {
+    font-family: 'RobotoSlab';
+    src: url('/fonts/RobotoSlab/RobotoSlab-Regular.ttf') format('truetype');
+    font-weight: 100; /* Thin */
+    font-style: normal;
+    font-display: swap;
+}
+
+
 
 .lr-stripe-bg {
   background: linear-gradient(
