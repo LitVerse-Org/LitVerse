@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getProviders, signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
@@ -7,7 +7,7 @@ export default function LoginPage({ providers }) {
   const [password, setPassword] = useState('');
   const [showError, setShowError] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const { data, status } = useSession();
+  const { data: session } = useSession(); // This is the correct way to get session data
   const router = useRouter();
 
   const handleSignIn = async (e) => {
@@ -22,18 +22,20 @@ export default function LoginPage({ providers }) {
     const data = await res.json();
 
     if (data.id) {
-      signIn('credentials', { email, password, callbackUrl: '/authtest' })
+      signIn('credentials', { email, password })
           .then(() => {
-            router.push('/authtest'); // Navigate to /authtest upon successful login
+            router.push('/home'); // Redirect to /home upon successful login
           });
     } else {
       setShowError(true); // Display an error message
     }
   };
 
-  if (status === "authenticated") {
-    router.push("/authtest");
-  }
+  useEffect(() => {
+    if (session) {
+      router.push('/home'); // Redirect to /home if already authenticated
+    }
+  }, [session, router]);
 
   return (
       <div className="flex items-center justify-center h-screen rl-stripe-bg">
@@ -41,7 +43,7 @@ export default function LoginPage({ providers }) {
             src="/white_logo_dark_background.png"
             alt="Logo"
             className="absolute top-12 w-1/3"
-            style={{left: '3rem' }}
+            style={{left: '1rem' }}
         />
         <img
             src="/spacedoodle.png"
@@ -54,7 +56,7 @@ export default function LoginPage({ providers }) {
             <input
                 type="text"
                 placeholder="Email"
-                className="w-full p-3 rounded-full border border-blue-300 text-black"
+                className="font-roboto-slab font-bold w-full p-3 rounded-full border border-blue-300 text-black"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
             />
@@ -63,14 +65,14 @@ export default function LoginPage({ providers }) {
             <input
                 type="password"
                 placeholder="Password"
-                className="w-full p-3 rounded-full border border-blue-300 text-black"
+                className="font-roboto-slab font-bold w-full p-3 rounded-full border border-blue-300 text-black"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className="mb-2">
             <button
-                className="text-white p-2 rounded-full w-full"
+                className="font-roboto-slab font-bold text-white p-2 rounded-full w-full"
                 style={{ backgroundColor: '#373a3a' }}
                 onClick={handleSignIn} // Updated this line
             >
@@ -78,32 +80,23 @@ export default function LoginPage({ providers }) {
             </button>
             {showError && (
                 <div
-                    className="text-red-500 text-center my-2"
+                    className=" font-roboto-slab font-bold text-red-500 text-center my-2"
                     style={{ animation: 'fadeIn 0.5s ease-out', animationFillMode: 'forwards' }}
                 >
                   Incorrect Email or Password
                 </div>
             )}
           </div>
-          <div className="mb-2 text-center">
-            <button className="text-black p-1 rounded-full w-56 bg-white" onClick={() => setShowModal(true)}>
-              Forgot Email/Password?
-            </button>
-          </div>
-          <div className="mb-2 text-center">
-            <button className="position-center text-black p-1 rounded-full w-56 bg-white" onClick={() => router.push('/register')}>
-              No Account? Register Here
-            </button>
-          </div>
-          <div className="border-b border-gray-300 my-2"></div>
+          <div className="border-b border-gray-300 my-4"></div>
           <div className="mt-4">
             {Object.values(providers).map((provider) => (
-                <div key={provider.id} className="mb-4">
+                provider.id !== 'credentials' && (
+                    <div key={provider.id} className="mb-2">
                   <button
                       onClick={async () => {
                         await signIn(provider.id);
                       }}
-                      className="bg-twitterWhite pl-2 pr-4 py-1 text-black rounded-full flex items-center justify-center mx-auto"
+                      className="font-roboto-slab font-bold bg-white pl-2 pr-4 py-1 text-black rounded-full flex items-center justify-center mx-auto"
                       style={{ maxWidth: '80%' }}
                   >
                     <img
@@ -121,8 +114,22 @@ export default function LoginPage({ providers }) {
                     />
                     Sign in with {provider.name}
                   </button>
+
                 </div>
+
+                )
             ))}
+          </div>
+          <div className="border-b border-gray-300 my-4"></div>
+          <div className="mb-2 text-center">
+            <button className="font-roboto-slab font-bold text-black p-1 rounded-full w-56 bg-white" onClick={() => setShowModal(true)}>
+              Forgot Email/Password?
+            </button>
+          </div>
+          <div className="mb-2 text-center">
+            <button className=" font-roboto-slab font-bold position-center text-black p-1 rounded-full w-56 bg-white" onClick={() => router.push('/register')}>
+              No Account? Register Here
+            </button>
           </div>
         </div>
 
@@ -130,7 +137,7 @@ export default function LoginPage({ providers }) {
             <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 bg-black">
               <div className="bg-darkGreen p-16 rounded-lg shadow-md w-128 relative">
                 <button className="absolute top-3 right-2 font-bold text-darkGreen text-2xl rounded-tl-lg p-2 border-2 border-white" onClick={() => setShowModal(false)}>X</button>
-                <div className="text-center text-white text-2xl font-bold mb-8">
+                <div className="font-roboto-slab font-bold text-center text-white text-2xl font-bold mb-8">
                   Find your LitVerse Account
                 </div>
                 <div className="mb-8">
