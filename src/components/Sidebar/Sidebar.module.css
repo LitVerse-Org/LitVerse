@@ -1,0 +1,180 @@
+/*General Styles: I've specified the general styles, mainly the font, which you might want to apply across the entire webpage.
+Sidebar Styles: Contains styles related to the sidebar, like individual sidebar items and the compose button.
+Modal Styles: These styles cater to modals, pop-up dialog boxes used in UI design.
+Dropdown Styles: All styles related to dropdown menu components.*/
+
+
+/* General Styles */
+.sidebar {
+  display: grid;
+  grid-template-columns: auto auto; /* Two columns: one for icon and one for text */
+  align-items: center; /* Center items vertically */
+  gap: 10px; /* Add some gap between grid items */
+  
+}
+
+
+
+/* Sidebar Styles */
+.sidebarContainer {
+  width: 200px;
+  height: 100vh;
+  background-color: #ffffff;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  position: relative;  /* Add this for positioning the pseudo-element */
+}
+
+.profileHeader {
+  padding-left: 20px; /* Adjust this value to your preference */
+  /* ... other styles ... */
+}
+
+
+.sidebarContainer::after {
+  content: "";
+  position: absolute;    /* Absolutely position this element */
+
+  top: 0;             /* Starts from the top */
+  bottom: 0;          /* Goes to the bottom */
+  left: 100%;         /* Positioned just outside the right edge of the sidebar */
+  width: 2px;         /* Width of the vertical line */
+  background-color: #792121;  /* Color of the vertical line */
+  z-index: 1;         /* Ensure it's above other content */
+}
+
+
+.sidebarItem {
+  margin-bottom: 15px;
+  padding:10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  transition: background 0.2s;
+  font-size: 18px;
+  width: 100%;
+  text-align: center;
+  font-weight: 600;
+  /* Add these styles to make content inline and spaced properly */
+  display: flex;
+  align-items: center;
+  justify-content:start; /* Align items to the start (left) */
+  transition: background 0.2s;
+}
+  
+
+  .sidebarLabel {
+    margin-left: 10px;               /* Space between the icon and the label */
+    color: black !important;         /* Ensures the color remains black */
+    vertical-align: middle;
+  }
+  
+
+
+.sidebarItem:hover {
+  background: #8c3737;  /* Optional: change background on hover for better UX */
+}
+
+.composeButton {
+  background-color: #4caf50;
+  color: white;
+  padding: 15px 20px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-weight: 700;
+  margin-top: auto; /* Push it to the bottom */
+}
+
+.composeButton:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Modal Styles */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: rgb(23, 21, 21);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  position: relative;
+}
+
+.modal-content button {
+  margin: 10px 0;
+  padding: 10px 20px;
+  border: 2px solid #4caf50;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: rgb(17, 15, 15);
+  font-weight: 600;
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+/* Dropdown Styles */
+.settings-icon {
+  font-size: 24px;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  vertical-align: middle;
+}
+
+.dropdown-box {
+  position: absolute;
+  top: 40px;
+  right: 10px;
+  background-color: rgb(11, 11, 11);
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  width: 200px;
+  border: 1px solid #0a0909;
+}
+.profileHeader {
+  padding-left: 20px; /* Adjust this value based on your UI preference */
+  /* ... Add other styles for profile header if needed ... */
+}
+
+.dropdown-box button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background-color: transparent;
+  border: none;
+  padding: 10px 15px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  border-top: 1px solid #090909;
+}
+
+.dropdown-box button:first-child {
+  border-top: none;
+}
+
+.dropdown-box button:hover {
+  background-color: #110b0b;
+}
