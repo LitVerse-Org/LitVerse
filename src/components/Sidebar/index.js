@@ -16,7 +16,7 @@ import Link from 'next/link';
 const SidebarItem = ({ icon, label, onClick }) => {
     return (
         <div className={styles.sidebarItem} onClick={onClick}>
-            <FontAwesomeIcon icon={icon} />
+            <FontAwesomeIcon icon={icon} color="#000"/>
             <span className={styles.sidebarLabel}>{label}</span>
         </div>
     );
