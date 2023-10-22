@@ -72,8 +72,7 @@ export default function LoginPage({ providers }) {
           </div>
           <div className="mb-2">
             <button
-                className="font-roboto-slab font-bold text-white p-2 rounded-full w-full"
-                style={{ backgroundColor: '#373a3a' }}
+                className="font-roboto-slab font-bold bg-darkGreen text-xl text-white p-2 rounded-full w-full"
                 onClick={handleSignIn} // Updated this line
             >
               Sign In
@@ -96,7 +95,7 @@ export default function LoginPage({ providers }) {
                       onClick={async () => {
                         await signIn(provider.id);
                       }}
-                      className="font-roboto-slab font-bold bg-white pl-2 pr-4 py-1 text-black rounded-full flex items-center justify-center mx-auto"
+                      className="font-roboto-slab font-bold text-l bg-white pl-2 pr-4 py-1 text-black rounded-full flex items-center justify-center mx-auto"
                       style={{ maxWidth: '80%' }}
                   >
                     <img
