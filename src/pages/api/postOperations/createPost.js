@@ -10,10 +10,12 @@ export default async function handler(req, res) {
 		return res.status(405).end(); // Method Not Allowed
 	}
 
-	// Fetch the userId from the session or a similar authentication source
-	// const userId = req.session.userId;
-	// For this example, I'm hardcoding a userId. Replace this with actual logic.
-	const userId = 1;
+	const session = await getSession({req});
+	const userId = session?.user?.id;
+
+	if(!userId){
+		return res.status(401).json({error: 'Not authorized'});
+	}
 
 	const { content } = req.body;
 
@@ -25,7 +27,7 @@ export default async function handler(req, res) {
 		const post = await prisma.post.create({
 			data: {
 				content,
-				userId,
+				userId: parseInt(userId, 10),
 				mediaType: 'none',  // For now, only text is being posted
 				//tags: [],  // Commented out for now, focusing on basic functionalities only. Will come back to tag functionality later.
 			},
