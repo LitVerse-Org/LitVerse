@@ -61,3 +61,4 @@ export default function SettingsModal({ show, onClose }) {
     </div>
   );
 }
+
