@@ -25,7 +25,12 @@ import { signOut } from "next-auth/react";
 
 export default function SettingsModal({ show, onClose }) {
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  
+
+  const handleCustomizeTheme = () => {
+    console.log("Open Customize UI modal");
+    onClose();
+  };
+
   const handleLogout = () => {
     signOut(); 
   };
@@ -51,7 +56,8 @@ export default function SettingsModal({ show, onClose }) {
         {/* Dropdown Menu */}
         {dropdownVisible && (
           <div className="dropdown-box">
-            <button onClick={handleDeleteAccount}>Delete account</button>
+            <button onClick={handleCustomizeTheme}>Customize Theme</button>
+            {/*<button onClick={handleDeleteAccount}>Delete account</button>*/}
             <br />
             <button onClick={handleLogout}>Log Out</button>
           </div>

@@ -25,14 +25,14 @@ const Sidebar = () => {
     return (
         <div className={styles.sidebarContainer}>
             <FontAwesomeIcon icon={faHome} className={styles.sidebarItem} onClick={() => router.push('/home')}/>
-            <FontAwesomeIcon icon={faBell} className={styles.sidebarItem} />
+            <FontAwesomeIcon icon={faBell} className={styles.sidebarItem} onClick={() => router.push('/notifications')}/>
             <span
                 className={styles.sidebarItem}
                 onClick={() => router.push('/profile')}  // Use the function here
             >
                 <FontAwesomeIcon icon={faUser} />
             </span>
-            <FontAwesomeIcon icon={faEnvelope} className={styles.sidebarItem}/>
+            <FontAwesomeIcon icon={faEnvelope} className={styles.sidebarItem} onClick={() => router.push('/messages')}/>
             <FontAwesomeIcon icon={faBookmark} className={styles.sidebarItem} onClick={() => router.push('/bookmarks')}/>
             <FontAwesomeIcon icon={faCog} className={styles.sidebarItem}
                              onClick={toggleSettingsModal} />

@@ -6,7 +6,7 @@ import { useSession, getSession, signOut } from "next-auth/react";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 
-export default function Bookmarks() {
+export default function Messages() {
     const { data: session, status } = useSession(); // Use the useSession hook here
     const router = useRouter();
 
@@ -20,13 +20,13 @@ export default function Bookmarks() {
         async function fetchData() {
             const fetchedSession = await getSession();
             console.log(
-                "Current Session token in bookmarks.js page from `getSession()`: ",
+                //"Current Session token in messages.js page from `getSession()`: ",
                 fetchedSession
             );
         }
         fetchData();
-        console.log("Session object from useSession:", session);
-        console.log("Status from useSession:", status);
+        //console.log("Session object from useSession:", session);
+        //console.log("Status from useSession:", status);
     }, []);
 
     return (
@@ -39,7 +39,7 @@ export default function Bookmarks() {
                             fontSize: "1em",
                         }}
                     >
-                        {JSON.stringify(session.token.email)}'s Bookmarked Posts
+                        {JSON.stringify(session.token.email)}'s Messages
                     </h1>
                     <div>
                         <p>
