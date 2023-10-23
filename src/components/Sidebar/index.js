@@ -13,15 +13,6 @@ import {
 import SettingsModal from './SettingsModal';
 import Link from 'next/link';
 
-const SidebarItem = ({ icon, label, onClick }) => {
-    return (
-        <div className={styles.sidebarItem} onClick={onClick}>
-            <FontAwesomeIcon icon={icon} color="#000"/>
-            <span className={styles.sidebarLabel}>{label}</span>
-        </div>
-    );
-};
-
 const Sidebar = () => {
     const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
 
@@ -29,26 +20,28 @@ const Sidebar = () => {
         setIsSettingsModalOpen(!isSettingsModalOpen);
     };
 
+    // No need for handleProfileIconClick function as we are directly using the Link component
+
     return (
         <div className={styles.sidebarContainer}>
-            <SidebarItem icon={faHome} label="Home" />
-            <SidebarItem icon={faBell} label="Notifications" />
-            <SidebarItem 
-                icon={faUser} 
-                label="Profile"
+            <FontAwesomeIcon icon={faHome} className={styles.sidebarItem} />  
+            <FontAwesomeIcon icon={faBell} className={styles.sidebarItem} /> 
+            <span 
+            className={styles.sidebarItem}
                 onClick={() => {
-                    const { useRouter } = require('next/router');
-                    const router = useRouter();
-                    router.push('/profile');
-                }} 
-            />
-            <SidebarItem icon={faEnvelope} label="Messages" />
-            <SidebarItem icon={faBookmark} label="Bookmarks" />
-            <SidebarItem 
-                icon={faCog} 
-                label="Settings"
-                onClick={toggleSettingsModal} 
-            />
+            // Use Next.js's router to programmatically navigate
+                const { useRouter } = require('next/router');
+                const router = useRouter();
+                router.push('/profile');
+            }}
+> 
+                <FontAwesomeIcon icon={faUser} />
+                </span>
+
+            <FontAwesomeIcon icon={faEnvelope} className={styles.sidebarItem} />
+            <FontAwesomeIcon icon={faBookmark} className={styles.sidebarItem} />
+            <FontAwesomeIcon icon={faCog} className={styles.sidebarItem}
+                onClick={toggleSettingsModal} />
             <div className={styles.sidebarItem}>
                 <button className={styles.composeButton}>
                     <FontAwesomeIcon icon={faPen} />
@@ -60,6 +53,6 @@ const Sidebar = () => {
             />
         </div>
     );
-}
+};
 
 export default Sidebar;
