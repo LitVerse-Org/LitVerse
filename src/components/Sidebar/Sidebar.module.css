@@ -44,16 +44,17 @@ Dropdown Styles: All styles related to dropdown menu components.*/
 }
 
 .sidebarItem:hover {
-  background: #8c3737;  /* From HEAD */
+  background-color: #6a6d6d;
+  border-radius: 8rem;
 }
 
 /* Button to Compose or Add New Entry */
 .composeButton {
-  background-color: #4caf50;
+  background-color: #006d04;
   color: white;
   padding: 15px 20px;
   border: none;
-  border-radius: 12px;
+  border-radius: 8rem;
   cursor: pointer;
   transition: background-color 0.2s ease;
   font-weight: 700;
