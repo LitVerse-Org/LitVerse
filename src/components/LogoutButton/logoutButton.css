@@ -1,0 +1,55 @@
+/* 
+* Common button styling for both 'edit' and 'logout' buttons.
+* Sets padding, rounded corners, and color schemes.
+*/
+.edit-button, .logout-button {
+    padding: 10px 20px;        /* Inner space */
+    margin-top: 10px;          /* Space above the button */
+    cursor: pointer;           /* Indicates an interactive element */
+    border: none;              /* Removes the default border */
+    border-radius: 5px;        /* Rounded corners */
+    background-color: #ff0048; /* Primary color */
+    color: #fff;               /* Text color */
+    font-size: 16px;           /* Text size */
+    transition: background-color 0.3s ease; /* Smooth color transition */
+    position: fixed;
+      
+  }
+  
+  /* 
+  * Hover effect for both buttons. 
+  * Changes the background color when hovered.
+  */
+   /* Adjustments to the edit and logout buttons */
+  .edit-button {
+    width: 100%; /* Make the buttons take the full width of the sidebar */
+    text-align: center; /* Center the button text */
+  }
+  .logoutButton {
+    background-color: blue; /* Solid blue background */
+    color: white; /* White text color */
+    padding: 10px 20px; /* Padding around the text */
+    border-radius: 25px; /* Rounded corners */
+    border: none; /* Remove any border */
+    font-weight: bold; /* Bold text */
+    font-size: 16px; /* Font size of the text */
+    cursor: pointer; /* Change cursor on hover */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effect and button press */
+    text-transform: uppercase; /* Make text uppercase */
+    display: inline-block; /* To ensure width and height are respected */
+  }
+  
+  .logoutButton:hover {
+    background-color: #0055cc; /* Slightly darker blue on hover */
+  }
+  
+  .logoutButton:active {
+    transform: scale(0.95); /* Slight shrinking effect when button is pressed */
+  }
+  
+  
+  .logoutButton:hover {
+    background-color: blue; /* Fill background with blue color on hover */
+    color: white; /* Change text color to white on hover */
+  }
+  
