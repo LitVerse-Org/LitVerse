@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { getSession, useSession, signOut } from "next-auth/react";
-import sidebar from "../components/sidebar";
+//import sidebar from "../components/sidebar";
+import Layout from "../components/Layout";
 
 export default function Home() {
     const { data: session, status } = useSession(); // Use the useSession hook here
@@ -20,23 +21,19 @@ export default function Home() {
     }, []);
 
     return (
+        <Layout>
         <div>
             <div
-                style={{
-                    background: "pink",
-                    height: "100vh",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                }}
+                
             >
-                <div style={{ color: "green", fontSize: "2em" }}>HOME</div>
+                
+                <h1 style={{ color: "zinc", fontSize: "1em" }}>HOME</h1>
                 <div>
                     <p>
                         {console.log('Rendering session.user:', session)}
                         Signed in as {JSON.stringify(session)}
                     </p>
-                    <button onClick={handleLogout} className="bg-red-800">Logout</button>
+                    <button onClick={handleLogout} className="px-3 py-2 sm:px-4 sm:py-2 flex font-roboto-slab text-zinc-200 font-bold bg-darkGreen focus:bg-black rounded-full">Logout</button>
                 </div>
             </div>
 
@@ -85,6 +82,8 @@ export default function Home() {
         {/*            </span>*/}
         {/*        </div>*/}
         {/*    </div>*/}
+                
         </div>
+        </Layout>
     );
 }

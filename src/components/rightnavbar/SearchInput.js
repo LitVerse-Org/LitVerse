@@ -23,7 +23,7 @@ const SearchInput = () => {
                 type = "text"
                 value={searchQuery || ""}
                 onChange={(event) => setSearchQuery(event.target.value)}
-                className="px-3 py-2 w-2/3 sm:px-4 sm:py-3 flex text-zinc-200 bg-zinc-800 focus:bg-black rounded-full focus:outline-none focus:ring-[1px] focus:ring-purple-700 placeholder:text-zinc-400"
+                className="px-3 py-2sm:px-4 sm:py-3 flex text-zinc-200 bg-zinc-800 focus:bg-black rounded-full focus:outline-none focus:ring-[1px] focus:ring-purple-700 placeholder:text-zinc-400  w-full"
                 placeholder="curiouser and curiouser..."
             />
         </form>
