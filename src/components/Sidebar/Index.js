@@ -24,7 +24,7 @@ const Sidebar = () => {
 
     return (
         <div className={styles.sidebarContainer}>
-            <FontAwesomeIcon icon={faHome} className={styles.sidebarItem} />
+            <FontAwesomeIcon icon={faHome} className={styles.sidebarItem} onClick={() => router.push('/home')}/>
             <FontAwesomeIcon icon={faBell} className={styles.sidebarItem} />
             <span
                 className={styles.sidebarItem}
@@ -32,8 +32,8 @@ const Sidebar = () => {
             >
                 <FontAwesomeIcon icon={faUser} />
             </span>
-            <FontAwesomeIcon icon={faEnvelope} className={styles.sidebarItem} />
-            <FontAwesomeIcon icon={faBookmark} className={styles.sidebarItem} />
+            <FontAwesomeIcon icon={faEnvelope} className={styles.sidebarItem}/>
+            <FontAwesomeIcon icon={faBookmark} className={styles.sidebarItem} onClick={() => router.push('/bookmarks')}/>
             <FontAwesomeIcon icon={faCog} className={styles.sidebarItem}
                              onClick={toggleSettingsModal} />
             <div className={styles.sidebarItem}>
