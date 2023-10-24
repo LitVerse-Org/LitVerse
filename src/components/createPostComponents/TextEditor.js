@@ -31,38 +31,44 @@ const TextEditor = () => {
 		}
 	};
 
-	return (
-		<div style={{ backgroundColor: '#F5F5F5', padding: '10px' }}>
-			<div style={{ height: '100px', marginBottom: '20px' }}>
-				<QuillNoSSRWrapper
-					placeholder="Write a short story..."
-					theme="snow"
+	   return (
+        <div style={{ backgroundColor: '#F5F5F5', padding: '10px', borderRadius: '15px' }}>
+            <div style={{ height: '100px', marginBottom: '20px' }}>
+                <QuillNoSSRWrapper
+                    placeholder="Write a short story..."
+                    theme="snow"
 
-					modules={{
-						toolbar: [
-							[{ 'header': '1'}, { 'font': [] }],
-							[{ 'list': 'ordered'}, { 'list': 'bullet' }],
-							['bold', 'italic', 'underline'],
-							['image', 'code-block']
-						]
-					}}
-					onChange={handleChange}
-				/>
-			</div>
-			<input
-				type="text"
-				placeholder="Add tags..."
-				>
-			</input>
-			{/* <TagSelector onSelectTags={setSelectedTags} /> Include the TagSelector component (commented out) */}
-			<button
-				style={{ backgroundColor: 'green', color: 'white', padding: '10px', marginTop: '10px', justifyContent: 'center' }}
-				onClick={handlePostClick}
-			>
-				Post
-			</button>
-		</div>
-	);
+                    modules={{
+                        toolbar: [
+                            [{ 'header': '1'}, { 'font': [] }],
+                            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                            ['bold', 'italic', 'underline'],
+                            ['image', 'code-block']
+                        ]
+                    }}
+                    onChange={handleChange}
+                />
+            </div>
+            <input
+                type="text"
+                className=""
+                style={{borderRadius: '10px'}}
+                placeholder="Add tags..."
+                >
+            </input>
+    
+            {/* <TagSelector onSelectTags={setSelectedTags} /> Include the TagSelector component (commented out) */}
+            <div className="flex justify-end">
+                <button
+                    className="px-3 py-2 sm:px-4 sm:py-2 flex font-roboto-slab text-zinc-200 font-bold bg-darkGreen focus:bg-black rounded-full"
+                    onClick={handlePostClick}
+                >
+                    Post
+                </button>
+            </div>
+        </div>
+    );
 };
+
 
 export default TextEditor;
