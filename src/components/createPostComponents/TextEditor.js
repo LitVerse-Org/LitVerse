@@ -31,7 +31,7 @@ const TextEditor = () => {
 		}
 	};
 
-	   return (
+	return (
         <div style={{ backgroundColor: '#F5F5F5', padding: '10px', borderRadius: '15px' }}>
             <div style={{ height: '100px', marginBottom: '20px' }}>
                 <QuillNoSSRWrapper
