@@ -15,10 +15,8 @@ Dropdown Styles: All styles related to dropdown menu components.*/
 .sidebarContainer {
   width: 200px;
   height: 100vh;
-  background-color: #ffffff;  /* Merged: background color from HEAD */
+  background-color: #000000;  /* Merged: background color from HEAD */
   padding: 20px;  /* Merged: padding from development */
-  border-right: 2px solid #e0e0e0;  /* From development */
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,6 +31,7 @@ Dropdown Styles: All styles related to dropdown menu components.*/
 /* Individual Items on the Sidebar */
 .sidebarItem {
   margin-bottom: 15px;
+  color: aliceblue;
   padding: 10px 20px;  /* From HEAD */
   border-radius: 10px;
   cursor: pointer;
