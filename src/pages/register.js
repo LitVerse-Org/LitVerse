@@ -23,9 +23,13 @@ export default function RegisterPage({ providers }) {
     const [errorMessage, setErrorMessage] = useState(''); // State for the error message
     const [showPasswordRules, setShowPasswordRules] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    const randomImageNumber = Math.floor(Math.random() * 8) + 1;
-    const randomImageSrc = `/Bwdoodle${randomImageNumber}.png`;
+    const [imageSrc, setImageSrc] = useState("");
 
+    useEffect(() => {
+        const randomImageNumber = Math.floor(Math.random() * 8) + 1;
+        const randomImageSrc = `/Bwdoodle${randomImageNumber}.png`;
+        setImageSrc(randomImageSrc);
+    }, []);
     const handleChange = (e) => {
         const val = e.target.value;
         setPassword(val);
@@ -100,7 +104,7 @@ export default function RegisterPage({ providers }) {
                 style={{ right: '1rem' }}
             />
             <img
-                src={randomImageSrc}
+                src={imageSrc}
                 alt="Background"
                 className="absolute bottom-0 left-0 w-3/4 z-0 transform rotate-45"
                 style={{bottom: '-65%', left: '-35%'}}

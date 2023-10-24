@@ -9,6 +9,14 @@ export default function LoginPage({ providers }) {
   const [showModal, setShowModal] = useState(false);
   const { data: session } = useSession(); // This is the correct way to get session data
   const router = useRouter();
+  const [imageSrc, setImageSrc] = useState("");
+
+  useEffect(() => {
+    const randomImageNumber = Math.floor(Math.random() * 8) + 1;
+    const randomImageSrc = `/Bwdoodle${randomImageNumber}.png`;
+    setImageSrc(randomImageSrc);
+  }, []);
+
 
   const handleSignIn = async (e) => {
     e.preventDefault();  // Prevent default form submission
@@ -46,12 +54,13 @@ export default function LoginPage({ providers }) {
             style={{left: '1rem' }}
         />
         <img
-            src="/spacedoodle.png"
-            alt="Logo"
-            className="absolute bottom-0 w-1/4"
-            style={{ right: '0rem' }}
+            src={imageSrc}
+            alt="Background"
+            className="absolute bottom-0 right-0 w-3/4 z-0 transform rotate-45"
+            style={{ bottom: '-67%', right: '-39%' }}  // Change 'left' to 'right'
         />
-        <div className="p-8 rounded-lg shadow-md w-96">
+
+        <div className="p-8 rounded-xl shadow-md backdrop-blur bg-black w-96 h-230">
           <div className="mb-2">
             <input
                 type="text"

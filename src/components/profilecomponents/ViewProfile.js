@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+
 
 // The Profile component is now prepared to receive a 'userId' prop for dynamically requesting user data.
 export default function Profile({ userId }) {
   // State hook for storing profile data.
   const [profileData, setProfileData] = useState(null);
+  const router = useRouter(); // Declare it here
 
   // Asynchronous function to fetch user profile data.
   async function fetchUserProfile() {
@@ -29,7 +32,7 @@ export default function Profile({ userId }) {
         <>
           {/* Navigation Bar */}
           <div className="flex justify-start items-center bg-gray-800 px-6 py-4 space-x-4">
-            <button>←</button>
+            <button onClick={() => router.push('/home')}>←</button>
             <div className="text-left">
               {/* Dynamic data is inserted here */}
               <h2 className="text-lg font-bold">{profileData.name}</h2>
