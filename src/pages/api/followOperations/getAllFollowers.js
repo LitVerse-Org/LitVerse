@@ -1,18 +1,19 @@
 import { PrismaClient } from '@prisma/client';
-import { getSession } from 'next-auth/react';
+import {getSession, useSession} from 'next-auth/react';
 import { authOptions } from '../auth/[...nextauth]';
+import {useEffect, useState} from "react";
 
 const prisma = new PrismaClient();
 
 export default async function handle(req, res) {
-  const session = await getSession({ req });
+  const { data: session } = useSession();
+  const [userId, setUserId] = useState(null);
 
-  if (!session) {
-    res.status(401).json({ error: 'Not authenticated' });
-    return;
-  }
-
-  const userId = session.user.id;
+  useEffect(() => {
+    if (session?.token?.sub) {
+      setUserId(session.token.sub);
+    }
+  }, [session]);
 
   const followers = await prisma.follower.findMany({
     where: {
