@@ -21,9 +21,15 @@ export default function RegisterPage({ providers }) {
     const [serverError, setServerError] = useState('');
     const [showErrorPopup, setShowErrorPopup] = useState(false); // State for the error popup
     const [errorMessage, setErrorMessage] = useState(''); // State for the error message
+    const [showPasswordRules, setShowPasswordRules] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [imageSrc, setImageSrc] = useState("");
 
-
-
+    useEffect(() => {
+        const randomImageNumber = Math.floor(Math.random() * 8) + 1;
+        const randomImageSrc = `/Bwdoodle${randomImageNumber}.png`;
+        setImageSrc(randomImageSrc);
+    }, []);
     const handleChange = (e) => {
         const val = e.target.value;
         setPassword(val);
@@ -33,6 +39,8 @@ export default function RegisterPage({ providers }) {
         setHasLower(/[a-z]/.test(val));
         setHasNumber(/[0-9]/.test(val));
         setHasSpecial(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(val));
+
+        setShowPasswordRules(true);
     };
 
     const handlePhoneNumberChange = (e) => {
@@ -93,14 +101,21 @@ export default function RegisterPage({ providers }) {
                 src="/logo_transparent_background.png"
                 alt="Logo"
                 className="absolute top-12 w-1/3"
-                style={{ right: '3rem' }}
+                style={{ right: '1rem' }}
             />
-            <div className="p-8 rounded-tr-lg shadow-md w-96" style={{ right: '3rem' }}>
+            <img
+                src={imageSrc}
+                alt="Background"
+                className="absolute bottom-0 left-0 w-3/4 z-0 transform rotate-45"
+                style={{bottom: '-65%', left: '-35%'}}
+            />
+            <div className="p-8 rounded-xl shadow-md backdrop-blur bg-black w-96" style={{ right: '3rem' }}>
+            {/*<div className="p-8 rounded-r-3xl shadow-md bg-black w-96" style={{ right: '3rem' }}>*/}
                 <div className="mb-2">
                     <input
                         type="text"
                         placeholder="Email"
-                        className="w-full p-3 rounded-lg border border-blue-300 text-black"
+                        className="font-roboto-slab font-bold w-full p-3 rounded-lg border border-blue-300 text-black"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
@@ -109,7 +124,7 @@ export default function RegisterPage({ providers }) {
                     <input
                         type="text"
                         placeholder="Username"
-                        className="w-full p-3 rounded-lg border border-blue-300 text-black"
+                        className="font-roboto-slab font-bold w-full p-3 rounded-lg border border-blue-300 text-black"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                     />
@@ -118,16 +133,26 @@ export default function RegisterPage({ providers }) {
                     <input
                         type="password"
                         placeholder="Password"
-                        className="w-full p-3 rounded-lg border border-blue-300 text-black"
+                        className="font-roboto-slab font-bold w-full p-3 rounded-lg border border-blue-300 text-black"
                         value={password}
                         onChange={handleChange}
+                        onFocus={() => setShowPasswordRules(true)}
                     />
+                    {showPasswordRules && (
+                        <div className="font-roboto-slab font-bold mt-2">
+                            <div className={validLength ? 'text-green-500' : 'text-orange-700'}>{validLength ? '✔' : '✖'} At least 8 characters</div>
+                            <div className={hasUpper ? 'text-green-500' : 'text-orange-800'}>{hasUpper ? '✔' : '✖'} At least one uppercase letter</div>
+                            <div className={hasLower ? 'text-green-500' : 'text-orange-800'}>{hasLower ? '✔' : '✖'} At least one lowercase letter</div>
+                            <div className={hasNumber ? 'text-green-500' : 'text-orange-800'}>{hasNumber ? '✔' : '✖'} At least one number</div>
+                            <div className={hasSpecial ? 'text-green-500' : 'text-orange-800'}>{hasSpecial ? '✔' : '✖'} At least one special character</div>
+                        </div>
+                    )}
                 </div>
                 <div className="mb-2">
                     <input
                         type="password"
                         placeholder="Confirm Password"
-                        className="w-full p-3 rounded-lg border border-blue-300 text-black"
+                        className="font-roboto-slab font-bold w-full p-3 rounded-lg border border-blue-300 text-black"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                     />
@@ -137,7 +162,7 @@ export default function RegisterPage({ providers }) {
                     <input
                         type="text"
                         placeholder="(***) ***-****"
-                        className={`w-full p-3 rounded-lg border ${phoneError ? 'border-red-500' : 'border-blue-300'} text-black`}
+                        className={`font-roboto-slab font-bold w-full p-3 rounded-lg border ${phoneError ? 'border-red-500' : 'border-blue-300'} text-black`}
                         value={phoneNumber}
                         onChange={handlePhoneNumberChange}
                     />
@@ -145,23 +170,23 @@ export default function RegisterPage({ providers }) {
                 </div>
                 <div className="mb-2">
                     <button
-                        className="text-white p-2 rounded-lg w-full custom-bg"
+                        className="font-roboto-slab font-bold text-white bg-darkGreen p-2 rounded-full text-xl w-full"
                         onClick={handleRegister}
                     >
                         Register
                     </button>
                     {serverError && <div className="text-red-500">{serverError}</div>}
                 </div>
-                <div className="border-b border-gray-300 my-2"></div>
+                <div className="border-b-2 border-gray-300 my-4"></div>
                 <div className="mt-2">
                     {Object.values(providers || {}).map((provider) => (
                         provider.id !== 'credentials' && (  // Skip the credentials provider
-                            <div key={provider.id} className="mb-4">
+                            <div key={provider.id} className="mb-3">
                                 <button
                                     onClick={async () => {
                                         await signIn(provider.id);
                                     }}
-                                    className="bg-twitterWhite pl-2 pr-4 py-1 text-black rounded-full flex items-center justify-center w-full"
+                                    className="font-roboto-slab font-bold bg-white pl-2 pr-4 py-1 text-black text-m rounded-full flex items-center justify-center mx-auto"
                                 >
                                     <img
                                         src={
@@ -182,9 +207,10 @@ export default function RegisterPage({ providers }) {
                         )
                     ))}
                 </div>
+                <div className="border-b-2 border-gray-300 my-2"></div>
                 <div className="text-center mt-4">
-                    <button className="bg-white text-black p-2 rounded text-xl w-40" onClick={() => router.push('/login')}>
-                        Login Instead
+                    <button className="font-roboto-slab font-bold bg-white text-black p-2 rounded-full rounded text-l w-39" onClick={() => router.push('/login')}>
+                        Go to Login
                     </button>
                 </div>
             </div>
