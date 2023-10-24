@@ -39,7 +39,7 @@ export default function Bookmarks() {
                             fontSize: "1em",
                         }}
                     >
-                        {JSON.stringify(session.token.email)}'s Bookmarked Posts
+                        {/*{JSON.stringify(session.token.email)}'s Bookmarked Posts*/}
                     </h1>
                     <div>
                         <p>
