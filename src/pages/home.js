@@ -1,16 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { getSession, useSession, signOut } from 'next-auth/react';
 import Layout from '../components/Layout';
+import TextEditor from "@/components/createPostComponents/TextEditor";
 
 export default function Home() {
     const {data: session, status} = useSession();
     const [randomUsers, setRandomUsers] = useState([]);
     const [showSessionInfo, setShowSessionInfo] = useState(false);
     const sessionInfoRef = useRef(null);
-
-    const handleLogout = async () => {
-        await signOut();
-    };
 
     const toggleSessionInfo = () => {
         setShowSessionInfo(!showSessionInfo);
@@ -29,25 +26,24 @@ export default function Home() {
     return (
         <Layout>
             <div style={{textAlign: 'center'}}>
-                <button onClick={toggleSessionInfo} style={{
-                    backgroundColor: '#007bff',
-                    color: 'white',
-                    padding: '5px 10px',
-                    borderRadius: '5px',
-                    margin: '10px'
-                }}>
-                    Show Session Info
-                </button>
+                <div>
+                    <TextEditor />
+                </div>
+                {/*<button onClick={toggleSessionInfo} style={{*/}
+                {/*    backgroundColor: '#007bff',*/}
+                {/*    color: 'white',*/}
+                {/*    padding: '5px 10px',*/}
+                {/*    borderRadius: '5px',*/}
+                {/*    margin: '10px'*/}
+                {/*}}>*/}
+                {/*    Show Session Info*/}
+                {/*</button>*/}
                 {showSessionInfo && <div ref={sessionInfoRef}
                                          style={{backgroundColor: '#f1f1f1', padding: '10px', borderRadius: '5px'}}>
                     <p style={{color: 'black'}}>Signed in as {JSON.stringify(session)}</p>
                 </div>}
-                <button onClick={handleLogout}
-                        className="px-3 py-2 sm:px-4 sm:py-2 flex font-roboto-slab text-zinc-200 font-bold bg-darkGreen focus:bg-black rounded-full">Logout
-                </button>
-
                 {/* Display Random Usernames and their Posts */}
-                <h2 style={{color: 'white'}}>Random User Posts</h2>
+                <h1 style={{color: 'white'}}>Home Feed</h1>
                 {randomUsers.map((user, index) => (
                     <div key={index}
                          style={{border: '1px solid #ccc', borderRadius: '5px', padding: '10px', margin: '10px'}}>
