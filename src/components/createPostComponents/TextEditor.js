@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-// import TagSelector from './TagSelector'; // Import the TagSelector component (commented out)
-import 'quill/dist/quill.snow.css';  // Import styles
+import 'quill/dist/quill.snow.css';
 
 const QuillNoSSRWrapper = dynamic(
 	() => import('react-quill'),
@@ -10,7 +9,6 @@ const QuillNoSSRWrapper = dynamic(
 
 const TextEditor = () => {
 	const [editorContent, setEditorContent] = useState('');
-	// const [selectedTags, setSelectedTags] = useState([]);  // State to hold the selected tags (commented out)
 
 	const handleChange = (content, delta, source, editor) => {
 		const html = editor.getHTML();
@@ -23,7 +21,7 @@ const TextEditor = () => {
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ content: editorContent }),  // Include tags (commented out)
+			body: JSON.stringify({ content: editorContent }),
 		});
 
 		if (response.ok) {
@@ -32,12 +30,11 @@ const TextEditor = () => {
 	};
 
 	return (
-		<div style={{ backgroundColor: '#F5F5F5', padding: '10px' }}>
-			<div style={{ height: '100px', marginBottom: '20px' }}>
+		<div className="bg-gray-100 p-5 rounded-lg">
+			<div className="h-50 mb-5">
 				<QuillNoSSRWrapper
-					placeholder="Write a short story..."
+					placeholder="Once upon a time..."
 					theme="snow"
-
 					modules={{
 						toolbar: [
 							[{ 'header': '1'}, { 'font': [] }],
@@ -46,21 +43,24 @@ const TextEditor = () => {
 							['image', 'code-block']
 						]
 					}}
+					className="h-25"
 					onChange={handleChange}
 				/>
 			</div>
-			<input
-				type="text"
-				placeholder="Add tags..."
+
+			<div className="flex justify-end mt-4">
+				<input
+					type="text"
+					className="rounded-lg border p-1 w-1/5"
+					placeholder="Add tags..."
+				/>
+				<button
+					className="px-3 py-2 sm:px-4 sm:py-2 flex font-roboto-slab text-white font-bold bg-green-600 focus:bg-green-800 rounded-full"
+					onClick={handlePostClick}
 				>
-			</input>
-			{/* <TagSelector onSelectTags={setSelectedTags} /> Include the TagSelector component (commented out) */}
-			<button
-				style={{ backgroundColor: 'green', color: 'white', padding: '10px', marginTop: '10px', justifyContent: 'center' }}
-				onClick={handlePostClick}
-			>
-				Post
-			</button>
+					Post
+				</button>
+			</div>
 		</div>
 	);
 };
