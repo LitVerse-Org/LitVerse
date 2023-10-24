@@ -1,39 +1,76 @@
-// components/ViewProfile.js
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 
-async function fetchUserProfile(userId) {
-    const res = await fetch(`/api/userOperations/getUser?userId=${userId}`);
-    return await res.json();
-}
+// The Profile component is now prepared to receive a 'userId' prop for dynamically requesting user data.
+export default function Profile({ userId }) {
+  // State hook for storing profile data.
+  const [profileData, setProfileData] = useState(null);
 
-export default function ViewProfile({ userId }) {
-    const [profileData, setProfileData] = useState(null);
+  // Asynchronous function to fetch user profile data.
+  async function fetchUserProfile() {
+    try {
+      const response = await fetch(`/api/userOperations/getUser?userId=${userId}`);
+      const data = await response.json();
+      setProfileData(data); // Set the profile data in the state.
+    } catch (error) {
+      console.error("Error fetching profile:", error);
+    }
+  }
 
-    useEffect(() => {
-        fetchUserProfile(userId)
-            .then(data => setProfileData(data))
-            .catch(err => console.error("Error fetching profile:", err));
-    }, [userId]);
+  // useEffect hook to perform side effects (data fetching in this case).
+  useEffect(() => {
+    fetchUserProfile(); // Fetch user profile data when the component is mounted.
+  }, [userId]); // The dependency array with 'userId' means the effect will rerun if 'userId' changes.
 
-    return (
-        <div className="container mx-auto my-12 p-6 bg-white rounded shadow">
-            {profileData ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div>
-                        <img className="rounded" src={profileData.profileImgS3URL} alt="Profile" />
-                    </div>
-                    <div className="space-y-4 text-black">
-                        <h1 className="text-2xl font-bold">{profileData.username}</h1>
-                        <p>Email: {profileData.email}</p>
-                        <p>Phone: {profileData.phone || 'N/A'}</p>
-                        <p>Bio: {profileData.bio || 'N/A'}</p>
-                        <p>Comments: {profileData.comments || 'N/A'}</p>
-                        {/* ...other user fields */}
-                    </div>
-                </div>
-            ) : (
-                <p>Loading...</p>
-            )}
-        </div>
-    );
+  // Below is the JSX that makes up the component presentation.
+  return (
+    <div className="h-screen bg-black text-white flex flex-col">
+      {/* Conditional rendering for the UI elements depending on whether 'profileData' is available. */}
+      {profileData ? (
+        <>
+          {/* Navigation Bar */}
+          <div className="flex justify-start items-center bg-gray-800 px-6 py-4 space-x-4">
+            <button>←</button>
+            <div className="text-left">
+              {/* Dynamic data is inserted here */}
+              <h2 className="text-lg font-bold">{profileData.name}</h2>
+              <p className="text-sm">{profileData.postsCount} posts</p>
+            </div>
+          </div>
+
+          {/* Gray Profile Section */}
+          <div className="mt-6 mx-6 px-6 py-8 rounded-lg relative bg-gray-700" style={{ height: '250px' }}>
+            {/* Avatar Circle */}
+            <div className="absolute bottom-0 left-3 w-24 h-24 bg-gray-600 rounded-full flex items-center justify-center">
+              {/* First letter of the dynamic name is used here */}
+              {/* Using optional chaining to safely access 'name'.*/}
+                <span className="text-3xl font-bold">{profileData?.name?.charAt(0)}</span>
+
+            </div>
+          </div>
+
+          {/* User Info */}
+          <div className="flex flex-col mt-4 ml-6 mr-6">
+            <h1 className="text-2xl font-bold">{profileData.name}</h1>
+            <p className="text-sm mt-2">@{profileData.username}</p>
+            <p className="text-xs mt-2">Joined {profileData.joinDate}</p>
+            <div className="flex mt-2">
+              <p className="text-xs mr-4">{profileData.followingCount} Following</p>
+              <p className="text-xs">{profileData.followersCount} Followers</p>
+            </div>
+
+            {/* Edit Profile Button */}
+            <button className="bg-gray-800 px-4 py-2 rounded mt-4 self-end">Edit Profile</button>
+
+            {/* Posts and Likes */}
+            <div className="flex mt-6">
+              <a href="#" className="text-sm mr-4 border-b-2 border-transparent hover:border-white">Posts</a>
+              <a href="#" className="text-sm border-b-2 border-transparent hover:border-white">Likes</a>
+            </div>
+          </div>
+        </>
+      ) : (
+        <p>Loading...</p> // Placeholder text for when the data is being fetched.
+      )}
+    </div>
+  );
 }
