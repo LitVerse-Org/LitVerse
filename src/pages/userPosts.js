@@ -28,6 +28,7 @@ function LikeButton({ postId }) {
   );
 }
 
+
 function UserPosts() {
   const [posts, setPosts] = useState([]);
   const [uid, setUid] = useState('');
