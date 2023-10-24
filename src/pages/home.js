@@ -1,89 +1,72 @@
-import React, { useEffect } from "react";
-import { getSession, useSession, signOut } from "next-auth/react";
-//import sidebar from "../components/sidebar";
-import Layout from "../components/Layout";
+import React, { useEffect, useState, useRef } from 'react';
+import { getSession, useSession, signOut } from 'next-auth/react';
+import Layout from '../components/Layout';
 
 export default function Home() {
-    const { data: session, status } = useSession(); // Use the useSession hook here
+    const {data: session, status} = useSession();
+    const [randomUsers, setRandomUsers] = useState([]);
+    const [showSessionInfo, setShowSessionInfo] = useState(false);
+    const sessionInfoRef = useRef(null);
 
     const handleLogout = async () => {
         await signOut();
     };
 
+    const toggleSessionInfo = () => {
+        setShowSessionInfo(!showSessionInfo);
+    };
+
     useEffect(() => {
-        async function fetchData() {
-            const fetchedSession = await getSession();
-            console.log("Current Session token in home.js page from `getSession()`: ", fetchedSession);
-        }
-        fetchData();
-        console.log("Session object from useSession:", session);
-        console.log("Status from useSession:", status);
+        // Fetch 5 random usernames and their posts
+        fetch('/api/userOperations/getRandomUsersandPosts?count=2')
+            .then((res) => res.json())
+            .then((data) => {
+                setRandomUsers(data);
+            })
+            .catch((error) => console.error('Error fetching random users:', error));
     }, []);
 
     return (
         <Layout>
-        <div>
-            <div
-                
-            >
-                
-                <h1 style={{ color: "zinc", fontSize: "1em" }}>HOME</h1>
-                <div>
-                    <p>
-                        {console.log('Rendering session.user:', session)}
-                        Signed in as {JSON.stringify(session)}
-                    </p>
-                    <button onClick={handleLogout} className="px-3 py-2 sm:px-4 sm:py-2 flex font-roboto-slab text-zinc-200 font-bold bg-darkGreen focus:bg-black rounded-full">Logout</button>
-                </div>
+            <div style={{textAlign: 'center'}}>
+                <button onClick={toggleSessionInfo} style={{
+                    backgroundColor: '#007bff',
+                    color: 'white',
+                    padding: '5px 10px',
+                    borderRadius: '5px',
+                    margin: '10px'
+                }}>
+                    Show Session Info
+                </button>
+                {showSessionInfo && <div ref={sessionInfoRef}
+                                         style={{backgroundColor: '#f1f1f1', padding: '10px', borderRadius: '5px'}}>
+                    <p style={{color: 'black'}}>Signed in as {JSON.stringify(session)}</p>
+                </div>}
+                <button onClick={handleLogout}
+                        className="px-3 py-2 sm:px-4 sm:py-2 flex font-roboto-slab text-zinc-200 font-bold bg-darkGreen focus:bg-black rounded-full">Logout
+                </button>
+
+                {/* Display Random Usernames and their Posts */}
+                <h2 style={{color: 'white'}}>Random User Posts</h2>
+                {randomUsers.map((user, index) => (
+                    <div key={index}
+                         style={{border: '1px solid #ccc', borderRadius: '5px', padding: '10px', margin: '10px'}}>
+                        <h3 style={{color: 'white'}}>{user.username}</h3>
+                        <ul style={{color: 'white'}}>
+                            {user.posts.map((post, postIndex) => (
+                                <li key={postIndex} style={{
+                                    marginBottom: '10px',
+                                    padding: '5px',
+                                    borderRadius: '3px',
+                                    backgroundColor: '#333'
+                                }}>
+                                    {post.content}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                ))}
             </div>
-
-        {/*<div style={{*/}
-        {/*    background: "black",*/}
-        {/*    height: "110vh",*/}
-        {/*    display: "flex",*/}
-        {/*    flexDirection: "column",*/}
-        {/*}}>*/}
-        {/*    /!* Top Bar *!/*/}
-        {/*    <div style={{*/}
-        {/*        width: "100%",*/}
-        {/*        height: "250px",*/}
-        {/*        backgroundColor: "#333",*/}
-        {/*        display: "flex",*/}
-        {/*        justifyContent: "center",*/}
-        {/*        alignItems: "center"*/}
-        {/*    }}>*/}
-        {/*       <span style={{*/}
-        {/*        fontSize: "3em",*/}
-        {/*        color: "#E9E9E9",*/}
-        {/*        textShadow: "2px 2px 4px #000",*/}
-        {/*        fontFamily: "'Arial', sans-serif",*/}
-        {/*        fontWeight: "bold"*/}
-        {/*    }}>*/}
-        {/*            Home*/}
-        {/*    </span>*/}
-        {/*    </div>*/}
-
-        {/*    /!* Row container for Sidebar and Content *!/*/}
-        {/*    <div style={{*/}
-        {/*        display: "flex",*/}
-        {/*        flex: 1,*/}
-        {/*        width: "100%",*/}
-        {/*    }}>*/}
-        {/*        <Sidebar />*/}
-        {/*        <div style={{*/}
-        {/*            display: "flex",*/}
-        {/*            flex: 1,*/}
-        {/*            justifyContent: "center",*/}
-        {/*            alignItems: "center",*/}
-        {/*            marginLeft: "500px"  // Adjust as needed based on your layout*/}
-        {/*        }}>*/}
-        {/*            <span style={{ color: "green", fontSize: "2em" }}>*/}
-        {/*                HOME*/}
-        {/*            </span>*/}
-        {/*        </div>*/}
-        {/*    </div>*/}
-                
-        </div>
         </Layout>
     );
 }

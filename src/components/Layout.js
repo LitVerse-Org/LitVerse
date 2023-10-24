@@ -8,11 +8,11 @@ export default function Layout({children}) {
       <Sidebar/>
       </div>
     
-    <div className="col-span-5 bg-gray-200 h-full p-2 h-screen border-l border-r rl-stripe-bg">{children}</div>
+    <div className="col-span-6 bg-gray-200 h-full p-2 h-screen border-l border-r rl-stripe-bg">{children}</div>
 
     
     
-    <div className="col-span-4 bg-black-800 h-full pl-3 text-zinc">
+    <div className="col-span-3 bg-black-800 h-full pl-3 text-zinc">
       <SearchInput />
     </div>
  
