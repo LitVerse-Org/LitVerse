@@ -51,7 +51,7 @@ model Post {
   userId    Int
   user      User    @relation(fields: [userId], references: [id])
   likes     Like[]
-  tags      Tag[]   @relation("PostToTag") // Establish many-to-many relation to Tag
+  tags Tag[] @relation("PostToTag") // Establish many-to-many relation to Tag
 }
 
 model Tag {

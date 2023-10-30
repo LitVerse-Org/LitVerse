@@ -50,6 +50,10 @@ function UserPosts() {
   const [likesForPost, setLikesForPost] = useState({});
   const [followersCount, setFollowersCount] = useState(0);
   const [followingCount, setFollowingCount] = useState(0);
+  const [searchTag, setSearchTag] = useState('');
+  const [tagSearchResults, setTagSearchResults] = useState([]);
+  const [selectedTag, setSelectedTag] = useState('');
+
 
   useEffect(() => {
     if (uid) {
@@ -65,6 +69,48 @@ function UserPosts() {
     }
   }, [uid]);
 
+
+  const handleTagSearch = (e) => {
+    const query = e.target.value;
+    setSearchTag(query);
+    if (query.length > 0) {
+      fetch(`/api/tagOperations/searchTags?query=${query}`)
+      .then((response) => response.json())
+      .then((data) => { setTagSearchResults(data); })
+      .catch((error) => console.error('Error searching tags:', error));
+    } else {
+      setTagSearchResults([]);
+    }
+  };
+
+  const selectTag = (tag) => {
+    console.log("Tag selected:", tag); // Debug log
+    setSearchTag(tag);
+    setTagSearchResults([]);
+    setSelectedTag(tag);  // Update selectedTag to trigger posts fetching
+  };
+
+
+  const fetchPostsByTag = () => {
+    if (!selectedTag) return;
+    console.log("Fetching posts for tag:", selectedTag);  // Debug log
+    fetch(`/api/tagOperations/getPostsByTag?tag=${selectedTag}`)
+    .then((response) => response.json())
+    .then((data) => { 
+      console.log("Posts received:", data);  // Debug log
+      if (Array.isArray(data)) setPosts(data); 
+    })
+    .catch((error) => console.error('Error fetching posts by tag:', error));
+  };
+
+  useEffect(() => {
+    console.log("useEffect triggered with:", selectedTag, uid); // Debug log
+    if (selectedTag) {
+      fetchPostsByTag();
+    } else {
+      fetchPosts();
+    }
+  }, [selectedTag, uid]);
 
   const fetchLikesForPost = (postId) => {
     fetch(`/api/postOperations/getLikesForPost?postId=${postId}`)
@@ -147,6 +193,24 @@ function UserPosts() {
         <button onClick={searchByUsername} style={{ backgroundColor: '#007bff', color: 'white', padding: '5px 10px', borderRadius: '5px' }}>
           Search by Username
         </button>
+      </div>
+      <div>
+        <input
+          type="text"
+          placeholder="Enter Tag"
+          value={searchTag}
+          onChange={handleTagSearch}
+          style={{ color: 'white', backgroundColor: 'black' }}
+        />
+        {tagSearchResults.length > 0 && (
+          <div style={{ border: '1px solid #ccc', maxHeight: '100px', overflow: 'auto', color: 'white', backgroundColor: 'black' }}>
+            {tagSearchResults.map((tag, index) => (
+              <div key={index} onClick={() => selectTag(tag.name)}>
+                {tag.name}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       <ul>
         {Array.isArray(posts) && posts.slice(0, visiblePosts).map((post, index) => (
