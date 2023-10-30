@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PostButton from '../components/createPostComponents/PostButton'
 
 function LikeButton({ postId }) {
   const [liked, setLiked] = useState(false);
@@ -22,9 +23,11 @@ function LikeButton({ postId }) {
   };
 
   return (
-    <button onClick={toggleLike} style={{ backgroundColor: '#007bff', color: 'white', padding: '5px 10px', borderRadius: '5px' }}>
-      {liked ? 'Unlike' : 'Like'}
-    </button>
+    <div>  <button onClick={toggleLike} style={{ backgroundColor: '#007bff', color: 'white', padding: '5px 10px', borderRadius: '5px' }}>
+    {liked ? 'Unlike' : 'Like'}
+  </button><PostButton/></div>
+    
+   
   );
 }
 

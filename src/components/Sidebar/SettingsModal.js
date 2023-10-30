@@ -19,12 +19,16 @@
  */
 
 import React, { useState } from 'react';
+import { useRouter } from "next/router";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+
 
 export default function SettingsModal({ show, onClose }) {
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const {data: session} = useSession();
+  const router = useRouter();
 
   const handleCustomizeTheme = () => {
     console.log("Open Customize UI modal");
@@ -34,6 +38,15 @@ export default function SettingsModal({ show, onClose }) {
   const handleLogout = () => {
     signOut(); 
   };
+  
+  const handleSignIn = () => {
+      router.push('/login');
+  }
+
+  const handleRegistration = () =>{
+
+    router.push('/register');
+  }
   
   const handleDeleteAccount = () => {
     console.log("Account deleted"); 
@@ -56,13 +69,22 @@ export default function SettingsModal({ show, onClose }) {
         {/* Dropdown Menu */}
         {dropdownVisible && (
           <div className="dropdown-box">
+             {!session ? (
+              <div>
+                <button onClick={handleSignIn}>Sign In</button>
+                <br/>
+                <button onClick={handleRegistration}>Register</button>
+              </div>
+            ) : (
+              <div>
             <button onClick={handleCustomizeTheme}>Customize Theme</button>
             {/*<button onClick={handleDeleteAccount}>Delete account</button>*/}
             <br />
             <button onClick={handleLogout}>Log Out</button>
           </div>
         )}
-        
+        </div>
+        )}
       </div>
     </div>
   );
