@@ -15,6 +15,7 @@ model User {
   phone              String?
   bio                String?
   posts              Post[]
+  bookmarkedPosts   Bookmark[]  // List of posts this user has bookmarked
   likes              Like[]
   // savedPosts         Post[]
   followedBy         Follower[] @relation("UserFollowers")
@@ -52,6 +53,7 @@ model Post {
   user      User    @relation(fields: [userId], references: [id])
   likes     Like[]
   tags      Tag[]   @relation("PostToTag") // Establish many-to-many relation to Tag
+  bookmarkedBy Bookmark[] // This will give you all the users who have bookmarked this post
 }
 
 model Tag {
@@ -83,3 +85,12 @@ model Tag {
 //   backgroundImgS3URL String? // S3 URL for background art img
 //   createdAt DateTime @default(now())
 // }
+
+model Bookmark {
+  id       Int      @id @default(autoincrement())
+  userId   Int      // ID of the user who bookmarked the post
+  postId   Int      // ID of the post that was bookmarked
+  createdAt DateTime @default(now()) // When the post was bookmarked
+  user     User     @relation(fields: [userId], references: [id]) // Relationship to User
+  post     Post     @relation(fields: [postId], references: [id]) // Relationship to Post
+}
