@@ -1,4 +1,5 @@
 import '../styles/globals.css';
+import 'font-awesome/css/font-awesome.min.css';
 import { SessionProvider } from 'next-auth/react';
 
 function MyApp({ Component, pageProps: { session, ...pageProps }, }) {

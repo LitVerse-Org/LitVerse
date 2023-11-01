@@ -30,7 +30,12 @@ export default async function createMockPosts(req, res) {
 
   for (const userId of userIds) {
     for (let i = 0; i < numberOfPosts; i++) {
-      const content = faker.lorem.paragraph();
+      // Generate Markdown-formatted content
+      const title = `# ${faker.lorem.sentence()}`;
+      const body = `> ${faker.lorem.paragraph()}`;
+      const bulletList = `- ${faker.lorem.words(3)}\n- ${faker.lorem.words(3)}\n- ${faker.lorem.words(3)}`;
+      const content = `${title}\n\n${body}\n\n${bulletList}`;
+
       const randomTagIds = faker.helpers.shuffle(tagIds).slice(0, faker.random.number({ min: 1, max: 3 })); // Associate with 1 to 3 tags
 
       try {
