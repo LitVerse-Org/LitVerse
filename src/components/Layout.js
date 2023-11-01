@@ -1,5 +1,5 @@
 import SearchInput from "./rightnavbar/SearchInput";
-import Sidebar from "./Sidebar/Index";
+import Sidebar from "./Sidebar/index";
 import React from "react";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -49,7 +49,7 @@ export default function Layout({ children }) {
                         </button>
                     )}
                 </div>
-                <div className="border border-purple-500 mt-2 w-full rounded-lg">
+                <div className="mt-2 w-full">
                     <SearchInput />
                 </div>
             </div>
