@@ -1,7 +1,7 @@
 //create boilerplate bookmarks page that imports layout and sidebar and displays all bookmarked posts
 
 import Layout from "../components/Layout";
-import Sidebar from "../components/Sidebar";
+//import Sidebar from "../components/Sidebar";
 import { useSession, getSession, signOut } from "next-auth/react";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
