@@ -1,6 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import prisma from '/utilities/db';
 
 export default async function createMockTags(req, res) {
   if (req.method !== 'POST') {

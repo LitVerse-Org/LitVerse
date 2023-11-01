@@ -1,7 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
-
+import prisma from '/utilities/db';
 export default async function getLikesForPost(req, res) {
   if (req.method !== 'GET') {
     return res.status(405).end(); // Method Not Allowed

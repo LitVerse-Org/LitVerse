@@ -15,7 +15,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import SettingsModal from './SettingsModal';
 
-const Sidebar = () => {
+const LeftNavBar = () => {
     const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
     const router = useRouter();
     const {data: session} = useSession();
@@ -71,74 +71,4 @@ const Sidebar = () => {
     );
 };
 
-export default Sidebar;
-
-
-
-
-
-
-// import React, { useState } from 'react';
-// import styles from './sidebar.module.css';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { useRouter } from 'next/router';
-// import {
-//     faHome,
-//     faBell,
-//     faBookmark,
-//     faCog,
-//     faPen,
-//     faUser,
-//     faEnvelope
-// } from '@fortawesome/free-solid-svg-icons';
-// import SettingsModal from './SettingsModal';
-// import Link from 'next/link';
-//
-// const Sidebar = () => {
-//     const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
-//     const router = useRouter();
-//
-//     const toggleSettingsModal = () => {
-//         setIsSettingsModalOpen(!isSettingsModalOpen);
-//     };
-//
-//     return (
-//         <div className={styles.sidebarContainer}>
-//             <div className={styles.sidebarItem} onClick={() => router.push('/home')}>
-//                 <FontAwesomeIcon icon={faHome} />
-//                 <span>Home</span>
-//             </div>
-//             <div className={styles.sidebarItem} onClick={() => router.push('/notifications')}>
-//                 <FontAwesomeIcon icon={faBell} />
-//                 <span>Notifications</span>
-//             </div>
-//             <div className={styles.sidebarItem} onClick={() => router.push('/profile')}>
-//                 <FontAwesomeIcon icon={faUser} />
-//                 <span>Profile</span>
-//             </div>
-//             <div className={styles.sidebarItem} onClick={() => router.push('/messages')}>
-//                 <FontAwesomeIcon icon={faEnvelope} />
-//                 <span>Messages</span>
-//             </div>
-//             <div className={styles.sidebarItem} onClick={() => router.push('/bookmarks')}>
-//                 <FontAwesomeIcon icon={faBookmark} />
-//                 <span>Bookmarks</span>
-//             </div>
-//             <div className={styles.sidebarItem} onClick={toggleSettingsModal}>
-//                 <FontAwesomeIcon icon={faCog} />
-//                 <span>Settings</span>
-//             </div>
-//             <div className={styles.sidebarItem}>
-//                 <button className={styles.composeButton} onClick={() => router.push('/createPost')}>
-//                     <FontAwesomeIcon icon={faPen} />
-//                 </button>
-//             </div>
-//             <SettingsModal
-//                 show={isSettingsModalOpen}
-//                 onClose={toggleSettingsModal}
-//             />
-//         </div>
-//     );
-// };
-//
-// export default Sidebar;
+export default LeftNavBar;

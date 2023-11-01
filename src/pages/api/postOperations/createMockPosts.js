@@ -1,8 +1,5 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from '/utilities/db';
 import faker from 'faker';
-
-const prisma = new PrismaClient();
-
 export default async function createMockPosts(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).end(); // Method Not Allowed

@@ -1,4 +1,4 @@
-import s3 from '../../lib/s3';
+import s3 from '../../utilities/s3';
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {

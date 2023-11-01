@@ -1,8 +1,6 @@
 // /Users/dobsondunavant/Documents/GitHub/LitVerse2/src/pages/api/userOperations/getTenRandomPosts.js
+import prisma from '/utilities/db';
 
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
 
 export default async function getTenRandomPosts(req, res) {
     if (req.method !== 'GET') {

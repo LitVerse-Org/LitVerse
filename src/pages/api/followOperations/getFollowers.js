@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import prisma from '/utilities/db';
+
 
 export default async function getFollowers(req, res) {
   const userId = req.query.userId;
