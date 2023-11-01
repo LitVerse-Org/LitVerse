@@ -9,7 +9,7 @@ After you fetch dev branch, all of a sudden your build fails.
 1. Delete node_modules folder using `rm -rf node_modules`
 2. Run `npm install`
 3. Run `npm run dev`
-
+asdasd
 4. Open another terminal, navigate to the project directory
 5. Start your PSQL server through the mac "postgres" app, windows "pgadmin" app, or through the terminal. 
    1. There are many ways to run your psql server, but just make sure the port it is running on is the same as the port in the database_url in the .env file in the project (5431 or 5432), and in the command used below. They just need to all be the same port.
