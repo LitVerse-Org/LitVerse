@@ -1,8 +1,7 @@
 
 import Layout from "../components/Layout";
-import Sidebar from "../components/Sidebar";
 import { useSession, getSession, signOut } from "next-auth/react";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 
 export default function Notifications() {
@@ -37,7 +36,12 @@ export default function Notifications() {
                             fontSize: "1em",
                         }}
                     >
-                        {JSON.stringify(session.token.email)}'s Notifications
+                        {session && (
+                            <div className="ml-3 px-3 py-2 sm:px-4 sm:py-2 flex font-roboto-slab text-zinc-200 font-bold"
+                            >
+                                {JSON.stringify(session.token.email)}'s Notifications
+                            </div>
+                        )}
                     </h1>
                     <div>
                         <p>

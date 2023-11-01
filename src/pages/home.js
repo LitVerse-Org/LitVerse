@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { getSession, useSession, signOut } from 'next-auth/react';
 import Layout from '../components/Layout';
-import TextEditor from "@/components/createPostComponents/TextEditor";
+import TextEditor from "@/components/CreatePost/TextEditor";
 import DisplayPost from '../components/ViewPost/DisplayPost';  // Make sure to adjust the import path
 
 export default function Home() {

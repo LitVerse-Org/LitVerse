@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import TextEditor from '../components/createPostComponents/TextEditor';
-import handlePostClick from '../components/createPostComponents/TextEditor';
+import TextEditor from '@/components/CreatePost/TextEditor';
+import handlePostClick from '@/components/CreatePost/TextEditor';
 
 export default function CreatePost() {
 	const { data: session } = useSession();

@@ -41,10 +41,6 @@ const Sidebar = () => {
                 <FontAwesomeIcon icon={faBell} className="text-2xl" />
                 <span className="ml-2">Notifications</span>
             </div>
-            <div className="flex items-center justify-center p-4 cursor-pointer text-xl hover:bg-gray-700 hover:rounded-lg w-full" onClick={() => router.push('/profile')}>
-                <FontAwesomeIcon icon={faUser} className="text-2xl" />
-                <span className="ml-2">Profile</span>
-            </div>
             <div className="flex items-center justify-center p-4 cursor-pointer text-xl hover:bg-gray-700 hover:rounded-lg w-full" onClick={() => router.push('/messages')}>
                 <FontAwesomeIcon icon={faEnvelope} className="text-2xl" />
                 <span className="ml-2">Messages</span>
@@ -52,6 +48,10 @@ const Sidebar = () => {
             <div className="flex items-center justify-center p-4 cursor-pointer text-xl hover:bg-gray-700 hover:rounded-lg w-full" onClick={() => router.push('/bookmarks')}>
                 <FontAwesomeIcon icon={faBookmark} className="text-2xl" />
                 <span className="ml-2">Bookmarks</span>
+            </div>
+            <div className="flex items-center justify-center p-4 cursor-pointer text-xl hover:bg-gray-700 hover:rounded-lg w-full" onClick={() => router.push('/profile')}>
+                <FontAwesomeIcon icon={faUser} className="text-2xl" />
+                <span className="ml-2">Profile</span>
             </div>
             <div className="flex items-center justify-center p-4 cursor-pointer text-xl hover:bg-gray-700 hover:rounded-lg w-full" onClick={toggleSettingsModal}>
                 <FontAwesomeIcon icon={faCog} className="text-2xl" />
@@ -62,6 +62,7 @@ const Sidebar = () => {
                     <FontAwesomeIcon icon={faPen} className="text-2xl" />
                 </button>
             </div>
+
             <SettingsModal
                 show={isSettingsModalOpen}
                 onClose={toggleSettingsModal}

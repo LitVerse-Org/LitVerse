@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getSession, useSession } from 'next-auth/react';
 import Layout from '../components/Layout';
-import ViewProfile from '../components/profilecomponents/ViewProfile';
+import ViewProfile from '@/components/ViewProfile/ViewProfile';
 
 export default function Profile() {
     const { data: session } = useSession();

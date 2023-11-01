@@ -1,5 +1,5 @@
-import SearchInput from "./rightnavbar/SearchInput";
-import Sidebar from "./Sidebar/index";
+import SearchInput from "@/components/RightNavBar/SearchInput";
+import LeftNavBar from "./LeftNavBar/index";
 import React from "react";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -21,7 +21,7 @@ export default function Layout({ children }) {
     return (
         <div className="grid grid-cols-12 max-w-screen mx-auto min-h-screen">
             <div className="col-span-3 bg-black-200 h-full pr-3 text-zinc">
-                <Sidebar />
+                <LeftNavBar />
             </div>
             <div className="col-span-6 bg-gray-200 h-full p-2 h-screen border-l border-r rl-stripe-bg">
                 {children}
