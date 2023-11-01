@@ -28,6 +28,12 @@ export default function Layout({ children }) {
             </div>
             <div className="col-span-3 bg-black-800 h-full pl-3 text-zinc flex flex-col items-end top-3 right-3">
                 <div className="flex ">
+                    {session && (
+                        <div className="ml-3 px-3 py-2 sm:px-4 sm:py-2 flex font-roboto-slab text-zinc-200 font-bold"
+                        >
+                            Welcome, {JSON.stringify(session.token.email)}
+                        </div>
+                    )}
                     <button
                         onClick={() => handleAction(session ? 'logout' : 'login')}
                         className="px-3 py-4 sm:px-4 sm:py-2 flex font-roboto-slab text-zinc-200 font-bold bg-darkGreen focus:bg-black rounded-full"
