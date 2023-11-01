@@ -1,4 +1,5 @@
-import prisma from '/prisma';import { getSession } from 'next-auth/react';
+import prisma from '/prisma';
+import { getSession } from 'next-auth/react';
 
 export default async function handler(req, res) {
 	if (req.method !== 'GET') {
