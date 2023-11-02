@@ -1,3 +1,5 @@
+import prisma from '/utilities/db';
+
 export default async function handle(req, res) {
   console.log("Received request", req.method, req.query); // Log the incoming request method and query
 

@@ -1,7 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
-
+import prisma from '/utilities/db';
 export default async function deleteMockPosts(req, res) {
     const dateLimit = new Date("2023-10-31T18:32:33.784Z"); // Change this to the date before which you want to delete posts
 

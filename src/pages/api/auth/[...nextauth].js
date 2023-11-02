@@ -2,11 +2,9 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaClient } from "@prisma/client";
+import prisma from '/utilities/db';
 import validator from "validator";
 import bcrypt from "bcrypt";
-
-const prisma = new PrismaClient();
 
 export default NextAuth({
     secret: process.env.SECRET,

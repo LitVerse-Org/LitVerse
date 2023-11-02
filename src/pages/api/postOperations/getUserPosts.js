@@ -1,7 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
-
+import prisma from '/utilities/db';
 export default async function getUserPosts(req, res) {
   console.log("Received UID:", req.query.uid);  // Debugging line
 
