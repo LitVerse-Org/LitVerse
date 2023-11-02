@@ -32,6 +32,8 @@ export default function Layout({ children }) {
                         <div className="ml-3 px-3 py-2 sm:px-4 sm:py-2 flex font-roboto-slab text-zinc-200 font-bold"
                         >
                             Welcome, {JSON.stringify(session.token.email)}
+                            UserID: {JSON.stringify(session.token.sub)}
+
                         </div>
                     )}
                     <button

@@ -1,39 +1,110 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ReactMarkdown from 'react-markdown';
 import { faThumbsUp, faComment, faBookmark } from '@fortawesome/free-solid-svg-icons';
+import { useUserId } from '/utilities/useUserID';
 
 const DisplayPost = ({ post }) => {
     const [isLiked, setIsLiked] = useState(false);
+    const [likesCount, setLikesCount] = useState(0);
     const [isBookmarked, setIsBookmarked] = useState(false);
+    const userID = useUserId();
+
+    useEffect(() => {
+        fetchLikesCount();
+        fetchBookmarkStatus();
+    }, [post.id, userID]);
+
+    const fetchLikesCount = async () => {
+        try {
+            const response = await fetch(`/api/postOperations/getLikesForPost?postId=${post.id}`);
+            const usersWhoLiked = await response.json();
+            setLikesCount(usersWhoLiked.length);
+            setIsLiked(usersWhoLiked.some(user => user.id === userID));
+        } catch (error) {
+            console.error('Error fetching likes count:', error);
+        }
+    };
+
+    const fetchBookmarkStatus = async () => {
+        try {
+            const response = await fetch(`/api/postOperations/getBookmarkStatus?postId=${post.id}&userId=${userID}`);
+            const bookmarkStatus = await response.json();
+            setIsBookmarked(bookmarkStatus.isBookmarked);
+        } catch (error) {
+            console.error('Error fetching bookmark status:', error);
+        }
+    };
 
     const handleLike = async () => {
-        setIsLiked(!isLiked);
-        if (isLiked) {
-            await fetch('/api/postOperations/unlikePost', {
+        setIsLiked(true);
+        setLikesCount(prev => prev + 1);
+
+        try {
+            const response = await fetch('/api/postOperations/likePost', {
                 method: 'POST',
-                body: JSON.stringify({ postId: post.id })
+                body: JSON.stringify({ userId: userID, postId: post.id }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
             });
-        } else {
-            await fetch('/api/postOperations/likePost', {
+
+            if (!response.ok) {
+                throw new Error('Response from server not ok');
+            }
+
+        } catch (error) {
+            console.error('Error liking the post:', error);
+            setIsLiked(false);
+            setLikesCount(prev => prev - 1);
+        }
+    };
+
+    const handleUnlike = async () => {
+        setIsLiked(false);
+        setLikesCount(prev => prev - 1);
+
+        try {
+            const response = await fetch('/api/postOperations/unlikePost', {
                 method: 'POST',
-                body: JSON.stringify({ postId: post.id })
+                body: JSON.stringify({ userId: userID, postId: post.id }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
             });
+
+            if (!response.ok) {
+                throw new Error('Response from server not ok');
+            }
+
+        } catch (error) {
+            console.error('Error unliking the post:', error);
+            setIsLiked(true);
+            setLikesCount(prev => prev + 1);
         }
     };
 
     const handleBookmark = async () => {
-        setIsBookmarked(!isBookmarked);
-        if (isBookmarked) {
-            await fetch('/api/postOperations/unbookmarkPost', {
+        const bookmarkedState = !isBookmarked;
+        setIsBookmarked(bookmarkedState);
+
+        const endpoint = bookmarkedState ? '/api/postOperations/bookmarkPost' : '/api/postOperations/unbookmarkPost';
+
+        try {
+            const response = await fetch(endpoint, {
                 method: 'POST',
-                body: JSON.stringify({ postId: post.id })
+                body: JSON.stringify({ userId: userID, postId: post.id }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
             });
-        } else {
-            await fetch('/api/postOperations/bookmarkPost', {
-                method: 'POST',
-                body: JSON.stringify({ postId: post.id })
-            });
+
+            if (!response.ok) {
+                throw new Error('Response from server not ok');
+            }
+        } catch (error) {
+            console.error('Error bookmarking/unbookmarking the post:', error);
+            setIsBookmarked(!bookmarkedState);
         }
     };
 
@@ -58,11 +129,11 @@ const DisplayPost = ({ post }) => {
                 <div className="text-sm text-white">{formattedDate}</div>
             </div>
             <div className="mt-2 text-white">
-                <ReactMarkdown>{`${post.content}`}</ReactMarkdown>
+                <ReactMarkdown>{post.content}</ReactMarkdown>
             </div>
             <div className="flex mt-2">
-                <button onClick={handleLike} className={`text-white w-1/3 ${isLiked ? 'text-blue-400' : ''}`}>
-                    <FontAwesomeIcon icon={faThumbsUp} />
+                <button onClick={isLiked ? handleUnlike : handleLike} className={`text-white w-1/3 ${isLiked ? 'text-blue-400' : ''}`}>
+                    <FontAwesomeIcon icon={faThumbsUp} /> {likesCount}
                 </button>
                 <button className="text-white w-1/3">
                     <FontAwesomeIcon icon={faComment} />

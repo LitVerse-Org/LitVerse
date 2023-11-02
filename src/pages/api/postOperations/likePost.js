@@ -1,10 +1,8 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import prisma from '/utilities/db';
 
 export default async function likePost(req, res) {
   if (req.method !== 'POST') {
-    return res.status(405).end(); // Method Not Allowed
+    return res.status(405).end();
   }
 
   const { userId, postId } = req.body;
@@ -14,13 +12,13 @@ export default async function likePost(req, res) {
   }
 
   try {
+    // Create a like record
     await prisma.like.create({
       data: {
         userId,
         postId,
       },
     });
-
     return res.status(201).json({ message: 'Successfully liked the post' });
   } catch (error) {
     console.error('Error liking the post:', error);

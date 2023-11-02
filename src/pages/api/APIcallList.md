@@ -48,7 +48,7 @@ Please add/change it as you add/change things elsewhere.
 - [GET /api/getSinglePost/[id].js](./src/pages/api/postOperations/getSinglePost/[id].js): Retrieve a single post by ID
 - [GET /api/getPostsByTag/[tag].js](./src/pages/api/postOperations/getPostsByTag/[tag].js): Retrieve all posts by tag
 
-#### Community Operations (/api/communityOperations/...)
+#### Communities Operations (/api/communityOperations/...)
 - [POST /api/createCommunity](./src/pages/api/communityOperations/createCommunity.js): Create a new community
 - [PUT /api/updateCommunity/[id].js](./src/pages/api/communityOperations/updateCommunity/[id].js): Update a community by ID
 - [DELETE /api/deleteCommunity/[id].js](./src/pages/api/communityOperations/deleteCommunity/[id].js): Delete a community by ID

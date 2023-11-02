@@ -8,22 +8,24 @@ datasource db {
 }
 
 model User {
-  id                 Int        @id @default(autoincrement())
-  email              String     @unique
-  username           String     @unique
+  id                 Int         @id @default(autoincrement())
+  email              String      @unique
+  username           String      @unique
   password           String?
   phone              String?
   bio                String?
   posts              Post[]
   likes              Like[]
-  // savedPosts         Post[]
-  followedBy         Follower[] @relation("UserFollowers")
-  following          Follower[] @relation("UserFollowing")
-  // communities        Community[]
-  comments           String?
+  followedBy         Follower[]  @relation("UserFollowers")
+  following          Follower[]  @relation("UserFollowing")
+  communities        Community[] @relation("CommunityMembers")
+  comments           Comment[]
+  bookmarks          Bookmark[]
   profileImgS3URL    String? // S3 URL for profile picture img
   coverImgS3URL      String? // S3 URL for cover art img
   backgroundImgS3URL String? // S3 URL for background art img
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @default(now())
 }
 
 model Follower {
@@ -31,28 +33,40 @@ model Follower {
   userId     Int
   followerId Int
   createdAt  DateTime @default(now())
-  user       User     @relation("UserFollowers", fields: [userId], references: [id])
+  user       User     @relation("UserFollowers", fields: [userId], references: [id], onDelete: Cascade)
   follower   User     @relation("UserFollowing", fields: [followerId], references: [id])
+
+  @@unique([userId, followerId])
 }
 
 model Like {
-  id     Int  @id @default(autoincrement())
-  userId Int
-  postId Int
-  user   User @relation(fields: [userId], references: [id])
-  post   Post @relation(fields: [postId], references: [id])
+  userId    Int
+  postId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      Post     @relation(fields: [postId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@id([userId, postId])
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
-  content   String // For Markdown-formatted text content like stories and poems
-  mediaUrl  String? // S3 URL for images or videos
-  mediaType String? // Type of media: 'image', 'video', 'none'
-  userId    Int
-  user      User     @relation(fields: [userId], references: [id])
-  likes     Like[]
-  tags      Tag[]    @relation("PostToTag") // Establish many-to-many relation to Tag
-  createdAt DateTime @default(now()) // The new field for storing the creation time
+  id          Int        @id @default(autoincrement())
+  content     String // For Markdown-formatted text content like stories and poems
+  mediaUrl    String? // S3 URL for images or videos
+  mediaType   String? // Type of media: 'image', 'video', 'none'
+  userId      Int
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  likes       Like[]
+  comments    Comment[]
+  tags        Tag[]      @relation("PostToTag") // Establish many-to-many relation to Tag
+  Bookmark    Bookmark[]
+  communityId Int?
+  Challenges  Challenge? @relation(fields: [challengeId], references: [id], "PostToChallenge")
+  challengeId Int? // Optional field linking to a Challenges if this post is a submission
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @default(now())
+  Communities Community? @relation(fields: [communityId], references: [id])
 }
 
 model Tag {
@@ -61,26 +75,49 @@ model Tag {
   posts Post[] @relation("PostToTag") // Establish many-to-many relation to Post
 }
 
-// model Comment {
-//   id        Int     @id @default(autoincrement())
-//   content   String
-//   userId    Int
-//   postId    Int
-//   user      User    @relation(fields: [userId], references: [id])
-//   post      Post    @relation(fields: [postId], references: [id])
-//   createdAt DateTime @default(now())
-// }
+model Bookmark {
+  userId    Int
+  postId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      Post     @relation(fields: [postId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
 
-// add a model for Communities, which will be very similar to subreddits. Users will "join" communities.
+  @@id([userId, postId])
+}
 
-// model Community {
-//   id        Int     @id @default(autoincrement())
-//   name      String  @unique
-//   bio       String?
-//   posts     Post[]
-//   members   Member[]
-//   profileImgS3URL    String? // S3 URL for profile picture img
-//   coverImgS3URL      String? // S3 URL for cover art img
-//   backgroundImgS3URL String? // S3 URL for background art img
-//   createdAt DateTime @default(now())
-// }
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  userId    Int
+  postId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      Post     @relation(fields: [postId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Communities {
+  id                 Int         @id @default(autoincrement())
+  name               String      @unique
+  bio                String?
+  challenges         Challenge[]
+  members            User[]      @relation("CommunityMembers")
+  profileImgS3URL    String? // S3 URL for profile picture img
+  coverImgS3URL      String? // S3 URL for cover art img
+  backgroundImgS3URL String? // S3 URL for background art img
+  Post               Post[]
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @default(now())
+}
+
+model Challenges {
+  id          Int        @id @default(autoincrement())
+  title       String // Title of the writing challenge
+  description String // Description or details about the challenge
+  startDate   DateTime // When the challenge starts
+  endDate     DateTime // When the challenge ends
+  posts       Post[]     @relation("PostToChallenge") // Relation to posts submitted for the challenge
+  createdAt   DateTime   @default(now()) // When the challenge was created
+  Communities Community? @relation(fields: [communityId], references: [id])
+  communityId Int?
+}
