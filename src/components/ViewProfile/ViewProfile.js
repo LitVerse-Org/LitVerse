@@ -65,10 +65,20 @@ export default function Profile({ userId }) {
             <button className="bg-gray-800 px-4 py-2 rounded mt-4 self-end">Edit Profile</button>
 
             {/* Posts and Likes */}
-            <div className="flex mt-6">
-              <a href="#" className="text-sm mr-4 border-b-2 border-transparent hover:border-white">Posts</a>
-              <a href="#" className="text-sm border-b-2 border-transparent hover:border-white">Likes</a>
+            <div className="text-center pt-4">
+              <span className="text-xl underline mb-4 block">My Stuff</span>
+              <div className="flex mt-6 pl-1 space-x-4 justify-center">
+                <a href="#" className="text-sm border-b-2 border-transparent hover:border-white">Posts</a>
+                <a href="#" className="text-sm border-b-2 border-transparent hover:border-white">Likes</a>
+                <a href="#" className="text-sm border-b-2 border-transparent hover:border-white">Comments</a>
+                <a href="#" className="text-sm border-b-2 border-transparent hover:border-white">Bookmarks</a>
+                <a href="#" className="text-sm border-b-2 border-transparent hover:border-white">Followers</a>
+                <a href="#" className="text-sm border-b-2 border-transparent hover:border-white">Following</a>
+                <a href="#" className="text-sm border-b-2 border-transparent hover:border-white">Communities</a>
+                <a href="#" className="text-sm border-b-2 border-transparent hover:border-white">Challenges</a>
+              </div>
             </div>
+
           </div>
         </>
       ) : (

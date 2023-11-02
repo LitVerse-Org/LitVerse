@@ -1,9 +1,8 @@
 //create boilerplate bookmarks page that imports layout and sidebar and displays all bookmarked posts
 
 import Layout from "../components/Layout";
-//import Sidebar from "../components/Sidebar";
 import { useSession, getSession, signOut } from "next-auth/react";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
@@ -59,17 +58,16 @@ export default function Bookmarks() {
                             fontSize: "1em",
                         }}
                     >
-                        {JSON.stringify(session?.token?.email)}'s Bookmarked Posts
-                    </h1>
-                    <div>
-                        {bookmarkedPosts.map(post => (
-                            <div key={post.id}>
-                                <h2>{post.title}</h2>  {/* Adjust according to the structure of your post object */}
-                                <p>{post.content}</p>
+                        {session && (
+                            <div className="ml-3 px-3 py-2 sm:px-4 sm:py-2 flex font-roboto-slab text-zinc-200 font-bold"
+                            >
+                                {JSON.stringify(session.token.email)}'s Bookmarks
                             </div>
-                        ))}
-                    </div>
+                        )}                    </h1>
                     <div>
+                        <p>
+                            {console.log("Rendering session.user:", session)}
+                        </p>
                         <button
                             onClick={handleLogout}
                             className="px-3 py-2 sm:px-4 sm:py-2 flex font-roboto-slab text-zinc-200 font-bold bg-darkGreen focus:bg-black rounded-full"

@@ -49,11 +49,13 @@ const TextEditor = () => {
 			</div>
 
 			<div className="flex justify-end mt-4">
-				<input
-					type="text"
-					className="rounded-lg border p-1 w-1/5"
-					placeholder="Add tags..."
-				/>
+				<div className="relative text-black">
+					<input
+						type="text"
+						className="rounded-lg border px-1 py-1 w-3/4"
+						placeholder="Add tags..."
+					/>
+				</div>
 				<button
 					className="px-3 py-2 sm:px-4 sm:py-2 flex font-roboto-slab text-white font-bold bg-green-600 focus:bg-green-800 rounded-full"
 					onClick={handlePostClick}
