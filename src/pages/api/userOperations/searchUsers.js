@@ -5,7 +5,7 @@ export default async function searchUsers(req, res) {
     return res.status(405).end(); // Method Not Allowed
   }
 
-  const { query } = req.query;
+  const { query, offset = 0, perPage = 10 } = req.query;
 
   if (!query) {
     return res.status(400).json({ error: 'Query is required' });
@@ -16,8 +16,10 @@ export default async function searchUsers(req, res) {
       where: {
         username: {
           startsWith: query,
+          mode: "insensitive",
         },
       },
+
       select: {
         username: true,
       },
