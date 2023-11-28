@@ -1,31 +1,62 @@
-'use client'
+"use client"
 
-import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import { useRouter,  useSearchParams  } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useDebounce } from 'use-debounce';
 
+const SearchInput = () => {  
 
-const SearchInput = () => {
-    const [searchQuery, setSearchQuery] = useState("");
+    /*
+        The useSearchParams Hook in React Router invokes the History API
+        The browser updates the URL
+        The React Router instance running at the root of the application detects changes in the location.search and surfaces a new value for the application
+        The code in the application that depends upon this value reacts
+    */
 
+    const search = useSearchParams();
+    const [searchQuery, setSearchQuery] = useState(search? search.get("query") : "");
     const router = useRouter();
+    const [debouncedQuery] = useDebounce(searchQuery, 500);
 
-    const onSearch = (event) => {
-        event.preventDefault();
+    console.log(search)
 
-        const encodedSearchQuery = encodeURI(searchQuery);
-        router.push(`/search?q=${encodedSearchQuery}`);
-        console.log("current query", encodedSearchQuery)
+    
+    const handleSearch = (e) => { 
+         e.preventDefault();
+
+
+        if (!debouncedQuery){
+            return; 
+        }
+    
+        const encodedSearchQuery  = encodeURI(debouncedQuery);
+        router.push(`/search?query=${encodedSearchQuery}`);     
+ 
+    }; 
+
+
+     const handleChange = (e) => {
+         setSearchQuery(e.target.value);
     };
 
-    return (
-        <form onSubmit={onSearch} className="relative justify-center w-3/4">
+    const handleKeyDown = (e) => {
+        if (e.key == "Enter"){
+            handleSearch(e)
+        }
+    };
+
+    return (        
+        <form onSubmit={handleSearch} className="relative justify-center w-full">
             <input 
-                type = "text"
                 value={searchQuery || ""}
-                onChange={(event) => setSearchQuery(event.target.value)}
-                className="px-3 py-2 sm:px-4 sm:py-3 flex text-zinc-500 bg-zinc-100 focus:bg-black rounded-full border focus:outline-none focus:ring-[1px] focus:ring-purple-700 placeholder:text-zinc-400  w-full"
+                onChange={handleChange} 
+                onKeyDown={handleKeyDown}
+                name="Search"
+                id="Search"
+                className="px-3 py-2 sm:px-4 sm:py-3 flex text-zinc-700 bg-zinc-100 focus:bg-zinc-100 rounded-full border focus:outline-none focus:ring-[1px] focus:ring-purple-700 placeholder:text-zinc-400  w-full"
                 placeholder="Curious? Search..."
-            />
+                
+            /> 
             <button type="submit" className="absolute right-0 top-0 mt-3 mr-4">
                 <svg 
                     xmlns="http://www.w3.org/2000/svg" 
@@ -40,7 +71,6 @@ const SearchInput = () => {
                     />
                 </svg>
             </button>
-
         </form>
     );
 };
