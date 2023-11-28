@@ -1,8 +1,9 @@
-
 import Layout from "../components/Layout";
 import { useSession } from "next-auth/react";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+//router.push(`/viewprofile?userId=${theUserId}`);
+
 
 export default function EditProfile() {
     const { data: session } = useSession();
@@ -180,4 +181,3 @@ export default function EditProfile() {
         </Layout>
     );
 }
-
