@@ -8,6 +8,9 @@ export default function Profile({ userId }) {
   async function fetchUserProfile() {
     try {
       const response = await fetch(`/api/userOperations/getUser?userId=${userId}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch user profile');
+      }
       const data = await response.json();
       setProfileData(data);
     } catch (error) {
@@ -32,8 +35,13 @@ export default function Profile({ userId }) {
             <button onClick={() => router.push('/home')}>← Back</button>
             <div className="text-left">
               <h2 className="text-lg font-bold">{profileData.name}</h2>
-              <p className="text-sm">{profileData.postsCount} posts</p>
+              
             </div>
+            {/* Display the username and number of posts */}
+          <div className="text-left ml-6 mt-6">
+            <h2 className="text-lg font-bold">@{profileData.username}</h2>
+            <p className="text-sm">{profileData.postsCount || 0} posts</p>
+          </div>
           </div>
 
           <div className="mt-6 mx-6 px-6 py-8 rounded-lg relative bg-gray-700" style={{ height: '250px' }}>
