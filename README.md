@@ -37,6 +37,7 @@ This guide will walk you through setting up your local development environment f
 #### Optional (Create 100 Mock Users)
 1. While your frontend (...:3000), prisma studio(...:5555), and psql server are all running, open another terminal and in our project directory:
 2. Run `curl -X POST http://localhost:3000/api/userOperations/createMockUsers`
+3. Next, run `curl -X POST http://localhost:3000/api/postOperations/createMockPosts`
    1. (Different command for windows. Can also use Postman to trigger this. 
    2. This will create 100 mock users in the database. You can view them in the database visualizer (Prisma Studio).
    3. All this command is doing is triggering the createMockUsers function in the createMockUsers.js file in the api folder. You can view the code in the api folder to see how it works.
