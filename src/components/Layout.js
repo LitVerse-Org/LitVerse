@@ -1,7 +1,7 @@
 // Layout.js
 import React from 'react';
 import LeftNavBar from './LeftNavBar/index';
-import RightNavBar from './RightNavBar/RightNavBar'; // Import the new RightSideBar component
+import RightNavBar from './RightNavBar 2/RightNavBar'; // Import the new RightSideBar component
 
 export default function Layout({ children }) {
     return (

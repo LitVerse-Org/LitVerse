@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-// import Avatar from './Avatar';
+import Avatar from './Avatar';
 
-const DisplayFollowing = () => {
+const Following = () => {
     const [following, setFollowing] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -30,7 +30,7 @@ const DisplayFollowing = () => {
                 <div>
                     {following.map((following) => (
                         <div key={follower.id} className="flex items-center my-2">
-                            {/*<Avatar src={follower.profileImgS3URL} big={false} editable={false} />*/}
+                            <Avatar src={follower.profileImgS3URL} big={false} editable={false} />
                             <div className="ml-4">
                                 <h2 className="text-xl">{following.username}</h2>
                                 <p className="text-gray-500">{following.email}</p>
@@ -43,13 +43,13 @@ const DisplayFollowing = () => {
     );
 };
 
-export default DisplayFollowing;
+export default Following;
 
 
 /*
 how this should look when all is said and done (we can remove the email stuff, just wanted it for testing)
 
-Your DisplayFollowers
+Your Followers
 
 (👤 Avatar) Username 1
 username1@email.com

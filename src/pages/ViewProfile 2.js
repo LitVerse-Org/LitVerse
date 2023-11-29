@@ -1,7 +1,7 @@
 // pages/viewprofile/[userId].js
 import React from 'react';
-import Layout from '../components/Layout';
-import ViewProfile from '../components/ViewProfile/View-Profile';
+import Layout from '../../components/Layout';
+import ViewProfile from '../../components/ViewProfile/ViewProfile';
 
 const ViewProfilePage = ({ userProfile }) => {
   return (
