@@ -3,20 +3,46 @@
 @tailwind utilities;
 
 body{
-  background-color:#000;
-  color:#fff;
+    background-color: #000;
+    color: black;
+    font-family: 'RobotoSlab', sans-serif;
+    font-weight: 400; /* Bold */
 }
 
 input:focus,
 button:focus {
   outline: none;
   border: 2px solid blue;
-  box-shadow: 0 0 5px blue;
+  box-shadow: 0 0 5px rgb(2, 2, 2);
 }
 
-/*.bg-rainbow {*/
-/*    background: grey;*/
-/*}*/
+@font-face {
+    font-family: 'RobotoSlab';
+    src: url('/fonts/RobotoSlab/RobotoSlab-Regular.ttf') format('truetype');
+    font-weight: 400; /* Regular */
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'RobotoSlab';
+    src: url('/fonts/RobotoSlab/RobotoSlab-Bold.ttf') format('truetype');
+    font-weight: 700; /* Bold */
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ... Similarly, add for other weights ... */
+
+@font-face {
+    font-family: 'RobotoSlab';
+    src: url('/fonts/RobotoSlab/RobotoSlab-Light.ttf') format('truetype');
+    font-weight: 100; /* Thin */
+    font-style: normal;
+    font-display: swap;
+}
+
+
 
 .lr-stripe-bg {
   background: linear-gradient(
@@ -37,8 +63,8 @@ button:focus {
           #000 33.33%,
           #987654 33.33%,
           #987654 66.66%,
-          #ffffff 66.66%,
-          #ffffff 100%
+          #000 66.66%,
+          #000 100%
   );
 }
 

@@ -1,16 +1,16 @@
 import '../styles/globals.css';
+import 'font-awesome/css/font-awesome.min.css';
 import { SessionProvider } from 'next-auth/react';
-import TimeAgo from 'javascript-time-ago';
-import en from 'javascript-time-ago/locale/en.json';
-import de from 'javascript-time-ago/locale/de.json'; // Import other locales as needed
+import { QueryClient, QueryClientProvider } from 'react-query';
 
-TimeAgo.addDefaultLocale(en);
-TimeAgo.addLocale(de); // Add other locales as needed
+const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps: { session, ...pageProps }, }) {
   return (
       <SessionProvider session={session}>
+        <QueryClientProvider client = {queryClient}>
         <Component {...pageProps} />
+        </QueryClientProvider>
       </SessionProvider>
   );
 }
