@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Avatar from './Avatar';
 
-const Following = () => {
+const DisplayFollowing = () => {
     const [following, setFollowing] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -43,13 +43,13 @@ const Following = () => {
     );
 };
 
-export default Following;
+export default DisplayFollowing;
 
 
 /*
 how this should look when all is said and done (we can remove the email stuff, just wanted it for testing)
 
-Your Followers
+Your DisplayFollowers
 
 (👤 Avatar) Username 1
 username1@email.com

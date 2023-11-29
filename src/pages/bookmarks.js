@@ -1,61 +1,23 @@
-//create boilerplate bookmarks page that imports layout and sidebar and displays all bookmarked posts
+import React, { useEffect, useState } from 'react';
+import { getSession, useSession } from 'next-auth/react';
+import Layout from '../components/Layout';
+import DisplayBookmarkedPosts from '@/components/ViewPost/DisplayBookmarkedPosts';
 
-import Layout from "../components/Layout";
-import { useSession, getSession, signOut } from "next-auth/react";
-import React, { useEffect } from "react";
-import { useRouter } from "next/router";
-
-export default function Bookmarks() {
-    const { data: session, status } = useSession(); // Use the useSession hook here
-    const router = useRouter();
-
-    const handleLogout = async () => {
-        await signOut();
-
-        router.push("/login");
-    };
+export default function Profile() {
+    const { data: session } = useSession();
+    const [userId, setUserId] = useState(null);
 
     useEffect(() => {
-        async function fetchData() {
-            const fetchedSession = await getSession();
-            console.log(
-                "Current Session token in bookmarks.js page from `getSession()`: ",
-                fetchedSession
-            );
+        if (session?.token?.sub) {
+            setUserId(session.token.sub);
         }
-        fetchData();
-        console.log("Session object from useSession:", session);
-        console.log("Status from useSession:", status);
-    }, []);
+        console.log('Session token in bookmarks.js:', userId);
+    }, [session]);
 
     return (
         <Layout>
-            <div>
-                <div>
-                    <h1
-                        style={{
-                            color: "white",
-                            fontSize: "1em",
-                        }}
-                    >
-                        {session && (
-                            <div className="ml-3 px-3 py-2 sm:px-4 sm:py-2 flex font-roboto-slab text-zinc-200 font-bold"
-                            >
-                                {JSON.stringify(session.token.email)}'s Bookmarks
-                            </div>
-                        )}                    </h1>
-                    <div>
-                        <p>
-                            {console.log("Rendering session.user:", session)}
-                        </p>
-                        <button
-                            onClick={handleLogout}
-                            className="px-3 py-2 sm:px-4 sm:py-2 flex font-roboto-slab text-zinc-200 font-bold bg-darkGreen focus:bg-black rounded-full"
-                        >
-                            Logout
-                        </button>
-                    </div>
-                </div>
+            <div className="container mx-auto px-4">
+                {userId && <DisplayBookmarkedPosts userId={userId} />}
             </div>
         </Layout>
     );

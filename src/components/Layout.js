@@ -9,9 +9,12 @@ export default function Layout({ children }) {
             <div className="col-span-3 bg-black-200 h-full pr-3 text-zinc">
                 <LeftNavBar />
             </div>
-            <div className="col-span-6 bg-gray-200 h-full p-2 h-screen border-l border-r rl-stripe-bg">
-                {children}
+            <div className="col-span-6 flex flex-col bg-gray-200 border-l border-r rl-stripe-bg">
+                <div className="p-2 flex-grow">
+                    {children}
+                </div>
             </div>
+
             <RightNavBar /> {/* Use the RightSideBar component */}
         </div>
     );
