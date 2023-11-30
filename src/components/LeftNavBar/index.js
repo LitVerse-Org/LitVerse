@@ -40,21 +40,21 @@ const Sidebar = () => {
                 <span className="ml-2">Home</span>
             </div>
             <div className="flex items-center justify-center p-4 cursor-pointer text-xl hover:bg-gray-700 w-full" onClick={() => router.push('/communities')}>
-                <FontAwesomeIcon icon={faUsers} className="text-2xl" />
+                <FontAwesomeIcon icon={faUsers} className="text-2xl text-blue-800" />
                 <span className="ml-2">Communities</span>
             </div>
             <div className="flex items-center justify-center p-4 cursor-pointer text-xl hover:bg-gray-700 w-full" onClick={() => router.push('/challenges')}>
-                <FontAwesomeIcon icon={faTrophy} className="text-2xl" />
+                <FontAwesomeIcon icon={faTrophy} className="text-2xl text-yellow-400" />
                 <span className="ml-2">Challenges</span>
             </div>
-            <div className="flex items-center justify-center p-4 cursor-pointer text-xl hover:bg-gray-700 hover:rounded-lg w-full" onClick={() => router.push('/notifications')}>
-                <FontAwesomeIcon icon={faBell} className="text-2xl" />
-                <span className="ml-2">Notifications</span>
-            </div>
-            <div className="flex items-center justify-center p-4 cursor-pointer text-xl hover:bg-gray-700 hover:rounded-lg w-full" onClick={() => router.push('/messages')}>
-                <FontAwesomeIcon icon={faEnvelope} className="text-2xl" />
-                <span className="ml-2">Messages</span>
-            </div>
+            {/*<div className="flex items-center justify-center p-4 cursor-pointer text-xl hover:bg-gray-700 hover:rounded-lg w-full" onClick={() => router.push('/notifications')}>*/}
+            {/*    <FontAwesomeIcon icon={faBell} className="text-2xl" />*/}
+            {/*    <span className="ml-2">Notifications</span>*/}
+            {/*</div>*/}
+            {/*<div className="flex items-center justify-center p-4 cursor-pointer text-xl hover:bg-gray-700 hover:rounded-lg w-full" onClick={() => router.push('/messages')}>*/}
+            {/*    <FontAwesomeIcon icon={faEnvelope} className="text-2xl" />*/}
+            {/*    <span className="ml-2">Messages</span>*/}
+            {/*</div>*/}
             <div className="flex items-center justify-center p-4 cursor-pointer text-xl hover:bg-gray-700 hover:rounded-lg w-full" onClick={() => router.push('/bookmarks')}>
                 <FontAwesomeIcon icon={faBookmark} className="text-2xl" />
                 <span className="ml-2">Bookmarks</span>
