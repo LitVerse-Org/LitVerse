@@ -11,6 +11,7 @@ export default function Profile() {
         if (session?.token?.sub) {
             setUserId(session.token.sub);
         }
+        console.log('Session token in profile.js:', userId);
     }, [session]);
 
     return (
