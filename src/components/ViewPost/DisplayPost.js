@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import ReactMarkdown from 'react-markdown';
-import Markdown from 'react-markdown';
+import ReactMarkdown from 'react-markdown'
 import {faThumbsUp, faComment, faBookmark, faCheck} from '@fortawesome/free-solid-svg-icons';
 import { useUserId } from '/utilities/useUserID';
 
@@ -189,7 +188,7 @@ const DisplayPost = ({ post }) => {
                 </div>
                 <div className="text-sm text-white">{formattedDate}</div>
             </div>
-            <div className="mt-2 text-white" style={{
+            <div className="mt-2 text-white markdown" style={{
                 display: '-webkit-box',
                 WebkitLineClamp: '5', // Number of lines to show before truncating
                 WebkitBoxOrient: 'vertical',
@@ -199,6 +198,7 @@ const DisplayPost = ({ post }) => {
             }}>
                 <ReactMarkdown>{post.content}</ReactMarkdown>
             </div>
+
 
             <div className="flex justify-between items-center mt-2">
                 <div className="flex justify-center items-center">
@@ -234,9 +234,8 @@ const DisplayPost = ({ post }) => {
                             <div className="text-sm text-white">{formatDate(post.createdAt)}</div>
                         </div>
                         <div className="underline bg-white h-1 rounded-full"/>
-                        <div className="mt-2 text-white">
-                            <ReactMarkdown>{post.content}</ReactMarkdown>
-                        </div>
+                        <div className="mt-2 text-white markdown">
+                            <ReactMarkdown>{post.content}</ReactMarkdown>                        </div>
                         <div className="flex justify-center items-center mt-2">
                             <button onClick={isLiked ? handleUnlike : handleLike} className={`text-white ${isLiked ? 'text-blue-400' : ''}`}>
                                 <FontAwesomeIcon icon={faThumbsUp} /> {likesCount}

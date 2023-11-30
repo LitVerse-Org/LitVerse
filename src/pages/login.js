@@ -48,7 +48,7 @@ export default function LoginPage({ providers }) {
   return (
       <div className="flex items-center justify-center h-screen rl-stripe-bg">
         <img
-            src="/white_logo_dark_background.png"
+            src="/logo_transparent_background.png"
             alt="Logo"
             className="absolute top-12 w-1/3"
             style={{left: '1rem' }}

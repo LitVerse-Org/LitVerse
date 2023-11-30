@@ -36,7 +36,7 @@ export default function Home() {
                 <div>
                     <TextEditor />
                 </div>
-                <h1 className="text-white">Home Feed</h1>
+                <h1 className="text-white text-3xl pt-12 pb-8">Home Feed</h1>
                 {randomPosts.map((post, index) => (
                     <DisplayPost key={index} post={post} />
                 ))}

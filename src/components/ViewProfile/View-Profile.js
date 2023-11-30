@@ -62,24 +62,32 @@ export default function Profile({ userId }) {
     <div className="h-screen bg-black text-white flex flex-col">
       {profileData ? (
           <>
-            <div className="flex justify-start items-center bg-gray-800 px-6 py-4 space-x-4">
+            <div className="flex justify-start items-center bg-black px-6 py-4 space-x-4">
               {/* Profile header and other content */}
-              <div className="text-left">
-                <h2 className="text-lg font-bold">{profileData.name}</h2>
-              </div>
-              <div className="text-left ml-6 mt-6">
-                <h2 className="text-lg font-bold">@{profileData.username}</h2>
-                <p className="text-sm">{profileData.postsCount || 0} posts</p>
+              <div className="relative bg-gray-700" style={{ height: '250px', width: '100%' }}>
+                {/* Banner Image */}
+                <img
+                    src="/spacebanner.png"
+                    alt="Banner"
+                    className="absolute top-0 left-0 w-full h-full object-cover"
+                />
+
+                {/* Avatar */}
+                <img
+                    src="/profilepic.png"
+                    alt={`${profileData.name || ''}'s avatar`}
+                    className="absolute bottom-0 bg-none left-3 w-32 h-32 rounded object-cover"
+                />
+
+                {/* Username and Post Count */}
+                <div className="absolute top-3 left-3 bg-black bg-opacity-50 rounded px-3 py-2">
+                  <h2 className="text-lg font-bold">@{profileData.username}</h2>
+                  <p className="text-sm">{profileData.postsCount || 0} posts</p>
+                </div>
               </div>
             </div>
 
-            <div className="mt-6 mx-6 px-6 py-8 rounded-lg relative bg-gray-700" style={{ height: '250px' }}>
-              <img
-                  src="/avatar.jpg"
-                  alt={`${profileData.name || ''}'s avatar`}
-                  className="absolute bottom-0 left-3 w-24 h-24 rounded-full object-cover"
-              />
-            </div>
+
 
             <div className="flex flex-col mt-4 ml-6 mr-6">
               <button
@@ -90,21 +98,21 @@ export default function Profile({ userId }) {
               </button>
               <h1 className="text-2xl font-bold">{profileData.name}</h1>
               <p className="text-sm mt-1">@{profileData.username}</p>
-              <p className="text-xs mt-2">Joined {profileData.joinDate}</p>
               <p className="text-xs mt-2">Email: {profileData.email}</p>
             </div>
 
             {/* Tabs */}
             <div className="text-center mt-1 ml-6 mr-6">
-              <div className="border-b border-white">
-                <div className="flex mt-6 pl-1 space-x-4 justify-center">
+              <div>
+                <div className="flex mt-6 pl-1 gap-2 justify-center">
                   {/* Tab buttons */}
-                  <div onClick={changeTab('posts')} className="text-sm border-b-2 border-transparent hover:border-white cursor-pointer">Posts</div>
-                  <div onClick={changeTab('likes')} className="text-sm border-b-2 border-transparent hover:border-white cursor-pointer">Likes</div>
-                  <div onClick={changeTab('bookmarks')} className="text-sm border-b-2 border-transparent hover:border-white cursor-pointer">Bookmarks</div>
-                  <div onClick={changeTab('followers')} className="text-sm border-b-2 border-transparent hover:border-white cursor-pointer">Followers</div>
-                  <div onClick={changeTab('following')} className="text-sm border-b-2 border-transparent hover:border-white cursor-pointer">Following</div>
-                         </div>
+                  <div onClick={changeTab('posts')} className="text-sm border-b-2 border-transparent hover:bg-gray-300 hover:text-green-800 cursor-pointer">My Posts</div>
+                  <div onClick={changeTab('likes')} className="text-sm border-b-2 border-transparent hover:bg-gray-300 hover:text-green-800 cursor-pointer">My Likes</div>
+                  <div onClick={changeTab('bookmarks')} className="text-sm border-b-2 border-transparent hover:bg-gray-300 hover:text-green-800 cursor-pointer">My Bookmarks</div>
+                  <div onClick={changeTab('followers')} className="text-sm border-b-2 border-transparent hover:bg-gray-300 hover:text-green-800 cursor-pointer">Followers</div>
+                  <div onClick={changeTab('following')} className="text-sm border-b-2 border-transparent hover:bg-gray-300 hover:text-green-800 cursor-pointer">Following</div>
+                </div>
+                <div className="underline bg-gray-400 rounded-full mt-2 pt-2"/>
               </div>
             </div>
 

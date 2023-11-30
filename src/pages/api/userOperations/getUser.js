@@ -57,7 +57,13 @@ export default async function handle(req, res) {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    return res.status(200).json(user);
+    const userWithPostCount = {
+      ...user,
+      postsCount: user.posts.length
+    };
+
+    // Return the user object with the post count
+    return res.status(200).json(userWithPostCount);
 
   } catch (error) {
     console.log("Error:", error); // Log any other errors
