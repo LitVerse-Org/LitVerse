@@ -4,6 +4,9 @@ import DisplayUserPosts from "@/components/ViewPost/DisplayUserPosts";
 import DisplayLikedPosts from "@/components/ViewPost/DisplayLikedPosts";
 import DisplayFollowers from "@/components/ViewFollowers-Following/DisplayFollowers";
 import DisplayFollowing from "@/components/ViewFollowers-Following/DisplayFollowing";
+import { useRouter } from 'next/router';
+import {router} from "next/client";
+
 
 export default function Profile({ userId }) {
   const [profileData, setProfileData] = useState(null);
@@ -25,11 +28,7 @@ export default function Profile({ userId }) {
   useEffect(() => {
     fetchUserProfile();
   }, [userId]);
-
-  // Helper function to navigate
-  const navigate = (path) => () => {
-    router.push(path);
-  };
+  
 
   // Update tab change logic
   const changeTab = (tab) => () => {
@@ -49,13 +48,14 @@ export default function Profile({ userId }) {
         return <DisplayFollowers userId={userId} />;
       case 'following':
         return <DisplayFollowing userId={userId} />;
-      case 'communities':
-        return <DisplayCommunities userId={userId} />;
-      case 'challenges':
-        return <DisplayChallenges userId={userId} />;
       default:
         return <div>You don't have any content here yet!</div>;
     }
+  };
+
+  // Helper function to navigate
+  const navigate = (path) => () => {
+    router.push(path);
   };
 
   return (
@@ -84,7 +84,7 @@ export default function Profile({ userId }) {
             <div className="flex flex-col mt-4 ml-6 mr-6">
               <button
                   className="bg-gray-800 px-4 py-2 rounded mt-2 self-end"
-                  onClick={() => { /* logic to edit profile */ }}
+                  onClick={() => router.push('/editProfilePage')}
               >
                 Edit Profile
               </button>
@@ -92,10 +92,6 @@ export default function Profile({ userId }) {
               <p className="text-sm mt-1">@{profileData.username}</p>
               <p className="text-xs mt-2">Joined {profileData.joinDate}</p>
               <p className="text-xs mt-2">Email: {profileData.email}</p>
-              <div className="flex mt-2 mb-1">
-                <p className="text-xs mr-4">{profileData.followingCount} Following</p>
-                <p className="text-xs">{profileData.followersCount} Followers</p>
-              </div>
             </div>
 
             {/* Tabs */}
@@ -108,9 +104,7 @@ export default function Profile({ userId }) {
                   <div onClick={changeTab('bookmarks')} className="text-sm border-b-2 border-transparent hover:border-white cursor-pointer">Bookmarks</div>
                   <div onClick={changeTab('followers')} className="text-sm border-b-2 border-transparent hover:border-white cursor-pointer">Followers</div>
                   <div onClick={changeTab('following')} className="text-sm border-b-2 border-transparent hover:border-white cursor-pointer">Following</div>
-                  <div onClick={changeTab('communities')} className="text-sm border-b-2 border-transparent hover:border-white cursor-pointer">Communities</div>
-                  <div onClick={changeTab('challenges')} className="text-sm border-b-2 border-transparent hover:border-white cursor-pointer">Challenges</div>
-                </div>
+                         </div>
               </div>
             </div>
 
