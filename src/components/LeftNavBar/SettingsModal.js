@@ -1,33 +1,9 @@
-/** Hey guys I provided a brief exeplination about this 
- * SettingsModal Component:
- *
- * A modal component that displays a settings cog icon. 
- * Upon clicking the icon, a dropdown menu is shown, providing options 
- * to either log out of the application or delete the user's account.
- * 
- * Props:
- * - show: A boolean that determines if the modal should be visible.
- * - onClose: A callback function to be executed when certain actions in the modal occur.
- * 
- * State:
- * - dropdownVisible: A boolean that determines if the dropdown menu should be visible.
- *
- * Functions:
- * - handleLogout: Logs the user out of the application.
- * - handleDeleteAccount: Simulates deleting a user's account and then closes the modal.
- * - toggleDropdown: Toggles the visibility of the dropdown menu.
- */
-
-import React, { useState } from 'react';
+import React from 'react';
 import { useRouter } from "next/router";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { signOut, useSession } from "next-auth/react";
 
-
 export default function SettingsModal({ show, onClose }) {
-  const [dropdownVisible, setDropdownVisible] = useState(false);
-  const {data: session} = useSession();
+  const { data: session } = useSession();
   const router = useRouter();
 
   const handleCustomizeTheme = () => {
@@ -36,57 +12,43 @@ export default function SettingsModal({ show, onClose }) {
   };
 
   const handleLogout = () => {
-    signOut(); 
+    signOut();
   };
-  
+
   const handleSignIn = () => {
-      router.push('/login');
-  }
-
-  const handleRegistration = () =>{
-
-    router.push('/register');
-  }
-  
-  const handleDeleteAccount = () => {
-    console.log("Account deleted"); 
-    onClose(); 
+    router.push('/login');
   };
 
-  const toggleDropdown = () => {
-    setDropdownVisible(!dropdownVisible);
+  const handleRegistration = () => {
+    router.push('/register');
+  };
+
+  const handleDeleteAccount = () => {
+    console.log("Account deleted");
+    onClose();
   };
 
   if (!show) return null;
 
   return (
-    <div className="modal-backdrop">
-      <div className="modal-content">
-        
-        {/* Cog Icon */}
-        <FontAwesomeIcon icon={faCog} className={`settings-icon ${dropdownVisible ? 'active' : ''}`} onClick={toggleDropdown} />
-        
-        {/* Dropdown Menu */}
-        {dropdownVisible && (
-          <div className="dropdown-box">
-             {!session ? (
-              <div>
-                <button onClick={handleSignIn}>Sign In</button>
-                <br/>
-                <button onClick={handleRegistration}>Register</button>
+      <div className="fixed inset-0 bg-gray-600 bg-opacity-75 flex justify-center items-center">
+        <div className="bg-darkGreen p-4 rounded-lg shadow-lg w-full max-w-md">
+          <button onClick={onClose} className="float-right text-xl font-bold">&times;</button>
+          <h2 className="text-xl font-bold text-center mb-4">Settings</h2>
+          {!session ? (
+              <div className="flex flex-col items-center space-y-3">
+                <button onClick={handleSignIn} className="w-full py-2 px-4 border border-gray-300 rounded hover:bg-gray-100">Sign In</button>
+                <button onClick={handleRegistration} className="w-full py-2 px-4 border border-gray-300 rounded hover:bg-gray-100">Register</button>
               </div>
-            ) : (
-              <div>
-            <button onClick={handleCustomizeTheme}>Customize Theme</button>
-            {/*<button onClick={handleDeleteAccount}>Delete account</button>*/}
-            <br />
-            <button onClick={handleLogout}>Log Out</button>
-          </div>
-        )}
+          ) : (
+              <div className="flex flex-col items-center space-y-3">
+                <button onClick={handleCustomizeTheme} className="w-full py-2 px-4 border border-gray-300 rounded hover:bg-gray-100">Customize Theme</button>
+                {/* Uncomment the next line to enable account deletion */}
+                {/* <button onClick={handleDeleteAccount} className="w-full py-2 px-4 border border-gray-300 rounded hover:bg-gray-100">Delete Account</button> */}
+                <button onClick={handleLogout} className="w-full py-2 px-4 border border-gray-300 rounded hover:bg-gray-100">Log Out</button>
+              </div>
+          )}
         </div>
-        )}
       </div>
-    </div>
   );
 }
-
