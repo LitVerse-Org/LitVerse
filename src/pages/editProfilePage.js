@@ -8,8 +8,6 @@ export default function EditProfile() {
     const router = useRouter();
     const [profileData, setProfileData] = useState({
         username: '',
-        firstName: '',
-        lastName: '',
         email: '',
         bio: '',
     }); // Initialize with empty fields
@@ -105,28 +103,6 @@ export default function EditProfile() {
                             id="username"
                             name="username"
                             value={profileData.username}
-                            onChange={handleChange}
-                            className="block w-full mt-1"
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="firstName" className="text-white">First Name</label>
-                        <input
-                            type="text"
-                            id="firstName"
-                            name="firstName"
-                            value={profileData.firstName}
-                            onChange={handleChange}
-                            className="block w-full mt-1"
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="lastName" className="text-white">Last Name</label>
-                        <input
-                            type="text"
-                            id="lastName"
-                            name="lastName"
-                            value={profileData.lastName}
                             onChange={handleChange}
                             className="block w-full mt-1"
                         />
