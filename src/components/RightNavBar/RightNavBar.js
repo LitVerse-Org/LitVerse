@@ -25,17 +25,16 @@ const RightNavBar = () => {
     };
 
     return (
-        <div className="fixed top-0 right-0 w-1/4 h-screen bg-black-800 pl-3 text-zinc flex flex-col items-end">
+        <div className="fixed top-0 right-0 w-1/4 h-screen bg-black-800 pl-2 text-zinc flex flex-col items-end">
             <div className="flex ">
                 {session && (
-                    <div className="ml-3 px-3 py-2 sm:px-4 sm:py-2 flex font-roboto-slab text-zinc-200 font-bold">
-                        Welcome, {JSON.stringify(session.token.email)}
-                        UserID: {JSON.stringify(session.token.sub)}
+                    <div className="py-2 sm:px-4 sm:py-2 flex font-roboto-slab text-zinc-200 font-bold">
+                        Welcome, {session.token.email}
                     </div>
                 )}
                 <button
                     onClick={() => handleAction(session ? 'logout' : 'login')}
-                    className="px-3 py-4 sm:px-4 sm:py-2 flex font-roboto-slab text-zinc-200 font-bold bg-darkGreen focus:bg-black rounded-full"
+                    className="px-1 py-4 sm:px-4 sm:py-2 flex items-center justify-center font-roboto-slab text-zinc-200 font-bold bg-darkGreen focus:bg-black rounded-full"
                 >
                     {session ? 'Logout' : 'Login'}
                 </button>
