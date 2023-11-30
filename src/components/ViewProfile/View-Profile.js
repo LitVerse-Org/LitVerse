@@ -28,7 +28,7 @@ export default function Profile({ userId }) {
   useEffect(() => {
     fetchUserProfile();
   }, [userId]);
-  
+
 
   // Update tab change logic
   const changeTab = (tab) => () => {

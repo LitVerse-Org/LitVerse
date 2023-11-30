@@ -1,38 +1,30 @@
-const handleSubmit = async (e) => {
-    e.preventDefault();
+import prisma from '/utilities/db';
+
+export default async function updateProfile(req, res) {
+    if (req.method !== 'PUT') {
+        return res.status(405).json({ error: 'Method Not Allowed' });
+    }
+
+    const { userId, username, email, bio, firstName, lastName } = req.body;
+
     try {
-        // Assuming you named your API endpoint /api/userOperations/updateProfile
-        const response = await fetch('/api/userOperations/updateProfile', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                // Include any other headers your API might need
+        const updatedUser = await prisma.user.update({
+            where: {
+                id: parseInt(userId) // Parse userId to integer
             },
-            body: JSON.stringify({
-                name: profileData.name,
-                bio: profileData.bio,
-                // Include other profile fields as necessary
-                // If you're updating the password, make sure to include
-                // both the current password and the new password
-            }),
+            data: {
+                username,
+                email,
+                bio,
+                // Handle firstName and lastName only if they are provided
+                ...(firstName ? { firstName } : {}),
+                ...(lastName ? { lastName } : {})
+            },
         });
 
-        if (!response.ok) {
-            const contentType = response.headers.get("Content-Type");
-            if (contentType && contentType.includes("application/json")) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || 'Failed to update profile');
-            } else {
-                throw new Error('Failed to update profile - Server responded with an error');
-            }
-        }
-
-        const data = await response.json();
-        console.log('Profile updated successfully', data);
-        router.push('/profile'); // Redirect to the profile page or wherever is appropriate
+        return res.status(200).json({ message: 'Profile updated successfully', updatedUser });
     } catch (error) {
-        // Handle network errors, server downtime, etc.
-        console.error('An unexpected error occurred', error);
-        // Optionally, update the state here to display the error message on the page
+        console.error('Error updating the profile:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
     }
-};
+}
