@@ -5,7 +5,7 @@ export default async function updateProfile(req, res) {
         return res.status(405).json({ error: 'Method Not Allowed' });
     }
 
-    const { userId, username, email, bio, firstName, lastName } = req.body;
+    const { userId, username, email, bio} = req.body;
 
     try {
         const updatedUser = await prisma.user.update({
@@ -16,9 +16,6 @@ export default async function updateProfile(req, res) {
                 username,
                 email,
                 bio,
-                // Handle firstName and lastName only if they are provided
-                ...(firstName ? { firstName } : {}),
-                ...(lastName ? { lastName } : {})
             },
         });
 
