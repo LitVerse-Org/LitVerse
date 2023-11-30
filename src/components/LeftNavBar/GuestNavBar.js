@@ -16,7 +16,7 @@ const GuestSidebar = () => {
     return (
         <div className="w-1/4 min-h-screen bg-black text-white fixed flex flex-col items-center">
             <Link href="/home">
-                    <img src="/white_logo_dark_background.png" alt="Logo" className="w-50 mt-6 mb-4 cursor-pointer"/>
+                    <img src="/white_logo_transparent_background.png" alt="LITVERSE" className="w-50 mt-6 mb-4 cursor-pointer"/>
             </Link>
         
             <div className="flex items-center justify-center p-4 cursor-pointer text-xl hover:bg-gray-700 hover:rounded-lg w-full" onClick={toggleSettingsModal}>

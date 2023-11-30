@@ -68,6 +68,10 @@ button:focus {
   );
 }
 
+.markdown > * {
+    all: revert;
+}
+
 
 
 

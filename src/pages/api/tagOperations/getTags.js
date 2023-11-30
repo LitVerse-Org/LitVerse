@@ -1,5 +1,4 @@
 import prisma from '/utilities/db';
-import { getSession } from 'next-auth/react';
 
 export default async function handler(req, res) {
 	if (req.method !== 'GET') {
@@ -7,13 +6,13 @@ export default async function handler(req, res) {
 	}
 
 	try {
-		// Assuming you have a Tag model in your Prisma schema
+		// Fetching both id and name fields for each tag
 		const tags = await prisma.tag.findMany({
 			select: {
+				id: true,
 				name: true,
 			},
 		});
-		console.log(tags)
 
 		return res.status(200).json(tags);
 	} catch (error) {
